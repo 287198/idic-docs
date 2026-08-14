@@ -1,0 +1,19 @@
+[
+  {
+    "id":"storage-basics","moduleId":"storage","title":"查看和管理本地缓存","aliases":["数据在哪里","清理缓存","存储管理","导出数据"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"存储管理用于查看本地缓存、扫描数据并执行经过确认的数据操作。",
+    "steps":["进入设置 → 存储管理。","先查看扫描结果和占用情况。","只选择你明确认识的数据类型。","执行删除或导出前先阅读确认提示。","操作完成后刷新摘要。"],
+    "causes":[],"verification":["扫描结果更新，或导出文件出现在系统下载位置。"],
+    "logGuide":{"where":"F12 → Console；IndexedDB 问题也查看启动日志。","keywords":["IndexedDB","AIChatAppDB","存储","storage","数据库初始化","数据保存"],"safeExcerpt":"只提供数据库操作阶段和错误类型，不提供 appData。","redact":["聊天原文","角色资料","API Key","个人信息","Cookie"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["数据库初始化、迁移、保存或导出稳定失败。","删除操作后数据异常变化。"],"include":["版本、浏览器/设备、操作类型、是否可复现、脱敏错误"]},"related":["settings","core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"storage-errors","moduleId":"storage","title":"数据保存或加载失败","aliases":["数据丢了","保存失败","IndexedDB报错","数据库初始化失败"],"intents":["error","recovery","logging"],"symptoms":["刷新后设置消失","应用启动失败","导出失败"],"errorCodes":[],
+    "summary":"先停止删除或迁移操作，保留错误时间和第一条数据库错误。",
+    "steps":["不要继续重复点击保存或删除。","刷新一次页面并确认问题是否仍然存在。","打开 F12 → Console。","搜索 IndexedDB、数据库初始化或数据保存错误。","先保存脱敏错误，再联系开发者。"],
+    "causes":["浏览器存储空间不足。","数据库升级或迁移失败。","浏览器隐私模式或权限阻止持久化。","应用在保存过程中被关闭。"],
+    "verification":["重新打开应用后数据仍在，且同类错误不再出现。"],
+    "logGuide":{"where":"启动后立即打开 F12 → Console。","keywords":["数据库初始化失败","IndexedDB 初始","从 IndexedDB 加载数据失败","保存数据到 IndexedDB 失败"],"safeExcerpt":"只提供第一条错误和操作时间。","redact":["appData 全文","聊天内容","密钥","个人资料"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["任何疑似数据丢失、迁移失败或数据库初始化失败。"],"include":["版本、浏览器/设备、操作、时间、第一条错误、是否还有备份"]},"related":["core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

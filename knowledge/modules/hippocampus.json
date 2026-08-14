@@ -1,0 +1,19 @@
+[
+  {
+    "id":"hippocampus-basics","moduleId":"hippocampus","title":"打开海马体设置","aliases":["海马体怎么用","在线记忆","海马体同步"],"intents":["setup","how-to"],"symptoms":[],"errorCodes":[],
+    "summary":"海马体设置集中管理在线记忆、同步和相关核心能力。",
+    "steps":["进入设置 → 海马体专属设置。","先查看核心能力摘要。","按需要配置在线服务和脱水 API。","保存设置。","返回聊天测试一次记忆相关功能。"],
+    "causes":[],"verification":["海马体摘要显示已配置核心能力，相关功能不再提示缺少配置。"],
+    "logGuide":{"where":"海马体页面或 F12 → Console。","keywords":["[Hippocampus]","海马体","dehydrate","Supabase","auth"],"safeExcerpt":"只提供错误类型、状态码和时间。","redact":["Supabase token","绑定码","用户 ID","聊天内容","API Key"]},
+    "escalation":{"contactProviderWhen":["Supabase 或脱水 API 返回明确的鉴权、限速或服务器错误。"],"contactDeveloperWhen":["本地页面渲染、迁移或保存稳定失败。"],"include":["版本、海马体分区、服务类型、状态码、脱敏日志"]},"related":["memory","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"hippocampus-errors","moduleId":"hippocampus","title":"海马体提示未配置或同步失败","aliases":["海马体报错","记忆同步失败","脱水 API 失败"],"intents":["error","recovery","logging"],"symptoms":["摘要显示未配置","同步失败","登录状态异常"],"errorCodes":["401","403","429","5xx"],
+    "summary":"先确认是哪一个子能力失败，不要一次修改所有配置。",
+    "steps":["记录海马体页面显示的具体子能力。","只检查对应的 URL、模型或登录状态。","保存后重新打开海马体页面。","仍失败时截取一条脱敏错误。"],
+    "causes":["子能力的 URL、模型或密钥缺失。","在线服务登录状态失效。","外部服务限速或暂时不可用。"],
+    "verification":["同一子能力摘要恢复正常，且对应操作可以完成。"],
+    "logGuide":{"where":"F12 → Console；如果有网络请求，再看 Network 的失败请求。","keywords":["[Hippocampus]","auth","dehydrate","Supabase","binding"],"safeExcerpt":"只提供错误码、错误类型和请求时间。","redact":["Authorization","绑定码","用户 ID","Token","记忆正文"]},
+    "escalation":{"contactProviderWhen":["外部服务明确返回鉴权、限速或服务器错误。"],"contactDeveloperWhen":["服务可用且配置完整，但本地迁移或 UI 仍稳定失败。"],"include":["版本、子能力、页面提示、状态码、脱敏错误、复现步骤"]},"related":["memory"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

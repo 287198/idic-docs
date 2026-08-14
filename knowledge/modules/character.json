@@ -1,0 +1,10 @@
+[
+  {
+    "id":"character-basics","moduleId":"character","title":"创建和编辑角色","aliases":["人物卡怎么做","角色卡","角色人设","修改角色"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"角色资料、头像、性格和角色专属设置集中在角色相关入口。",
+    "steps":["打开角色列表或当前聊天的角色设置。","填写角色名称和基础资料。","按需要设置头像、外观、性格和世界书关联。","保存角色。","重新进入聊天检查显示和回复风格。"],
+    "causes":[],"verification":["角色列表显示新资料，聊天头部和回复使用新的角色信息。"],
+    "logGuide":{"where":"F12 → Console；保存角色或加载角色失败时重试一次。","keywords":["character","角色","AI编辑","保存","appData"],"safeExcerpt":"只提供保存失败的错误类型，不提供角色设定正文。","redact":["角色提示词","世界书正文","聊天原文","API Key","个人资料"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["角色保存后刷新丢失，或编辑页稳定无法打开。"],"include":["版本、角色操作、页面提示、是否影响其他角色、脱敏错误"]},"related":["offline-worldbook","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

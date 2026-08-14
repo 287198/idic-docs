@@ -1,0 +1,10 @@
+[
+  {
+    "id":"takeout-basics","moduleId":"takeout","title":"使用外卖神券","aliases":["外卖优惠券","神券怎么用","点餐","每日基础券"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"外卖模块包含每日基础券、券包、偏好和图片设置等入口。",
+    "steps":["打开外卖模块。","查看每日基础券或我的神券包。","按页面提示选择或添加食谱。","需要时打开偏好设置。","图片生成设置需要已加载生图组件。"],
+    "causes":[],"verification":["券包或外卖页面显示当前数据，保存偏好后重新打开仍保留。"],
+    "logGuide":{"where":"F12 → Console。图片生成失败时也检查生图相关日志。","keywords":["AI点餐","takeout","food","生图组件","神券"],"safeExcerpt":"只提供失败动作和错误类型，不提供食谱私人数据。","redact":["API Key","图片地址","个人偏好中的隐私","Cookie"]},
+    "escalation":{"contactProviderWhen":["只有生图或外部服务请求失败时。"],"contactDeveloperWhen":["券包、偏好或本地页面稳定打不开或保存失败。"],"include":["版本、页面、失败动作、错误类型、是否影响其他模块"]},"related":["image-generation","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

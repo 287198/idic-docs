@@ -1,0 +1,19 @@
+[
+  {
+    "id":"pet-basics","moduleId":"pet","title":"打开宠物模块","aliases":["怎么养宠物","宠物房间","宠物档案"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"从聊天功能面板进入宠物页，选择房间和宠物查看状态。",
+    "steps":["打开一个角色聊天。","打开功能面板并选择宠物。","选择宠物房间或宠物。","查看状态并执行页面提供的互动。","需要时返回角色聊天。"],
+    "causes":[],"verification":["宠物页能显示当前房间、宠物和状态，互动后状态有变化。"],
+    "logGuide":{"where":"F12 → Console。","keywords":["宠物调试","宠物意愿","宠物AI档案","pet"],"safeExcerpt":"只提供错误类型和操作名称，不提供 appData。","redact":["API Key","角色资料","聊天内容","个人信息"]},
+    "escalation":{"contactProviderWhen":["宠物 AI 请求返回 API 错误。"],"contactDeveloperWhen":["宠物页打不开、房间选择稳定报错或保存后状态丢失。"],"include":["版本、角色、房间、宠物操作、脱敏错误"]},"related":["character","core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"pet-errors","moduleId":"pet","title":"宠物页打不开或状态不更新","aliases":["宠物报错","宠物状态不变","宠物选择失败"],"intents":["error","recovery","logging"],"symptoms":["宠物视图为空","选择宠物失败","AI 档案生成失败"],"errorCodes":[],
+    "summary":"先重新打开宠物页，再记录宠物调试日志中的第一条错误。",
+    "steps":["退出宠物页并重新进入。","确认当前聊天角色仍然存在。","重新选择房间或宠物。","如果只有 AI 档案失败，先继续使用本地状态功能。","记录第一条宠物相关错误。"],
+    "causes":["当前角色没有可用宠物数据。","宠物懒加载或页面初始化失败。","宠物 AI 请求失败，但本地功能仍可用。"],
+    "verification":["宠物页重新显示状态，或者至少本地互动可以执行。"],
+    "logGuide":{"where":"F12 → Console。","keywords":["[宠物调试]","宠物意愿","宠物AI档案","Imported pet home"],"safeExcerpt":"提供首次失败动作前后约 20 行。","redact":["appData","API Key","角色设定","聊天内容"]},
+    "escalation":{"contactProviderWhen":["只有宠物 AI 请求返回服务商错误时。"],"contactDeveloperWhen":["页面初始化或本地房间选择稳定失败。"],"include":["版本、角色、房间、第一条错误、是否能重新进入"]},"related":["core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

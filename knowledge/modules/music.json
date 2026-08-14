@@ -1,0 +1,19 @@
+[
+  {
+    "id":"music-basics","moduleId":"music","title":"使用音乐与播放器","aliases":["怎么点歌","播放音乐","网易云音乐","Suno歌曲"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"音乐模块包含搜索、点歌、播放、歌词和收藏等流程；具体服务需要先配置对应后端。",
+    "steps":["打开音乐模块。","按页面提示配置需要的音乐后端。","搜索歌曲或使用点歌入口。","从播放器播放结果。","需要时查看歌词或收藏。"],
+    "causes":[],"verification":["播放器显示歌曲信息并开始播放，或明确显示未配置的服务。"],
+    "logGuide":{"where":"F12 → Console；播放失败时也看 Network。","keywords":["Suno","播放器大脑","缓存系统","歌词","搜索音乐","AI点歌"],"safeExcerpt":"只提供歌曲 ID、状态码和错误类型，不提供账号 Cookie。","redact":["MUSIC_U","Cookie","Authorization","账号信息","私人歌曲地址"]},
+    "escalation":{"contactProviderWhen":["音乐后端或服务商返回鉴权、限速、服务器错误。"],"contactDeveloperWhen":["本地播放器、缓存或 UI 稳定失败。"],"include":["版本、音乐服务、歌曲 ID、错误时间、状态码、脱敏日志"]},"related":["settings","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"music-errors","moduleId":"music","title":"歌曲搜索或播放失败","aliases":["音乐搜不到","歌曲播放不了","歌词加载失败"],"intents":["error","recovery","logging"],"symptoms":["搜索失败","播放器没有声音","歌词失败但歌曲能播"],"errorCodes":["401","403","404","429","5xx"],
+    "summary":"先区分搜索、歌曲详情、音频地址和歌词哪一步失败。",
+    "steps":["记录失败动作：搜索、详情、播放还是歌词。","重新尝试一首短歌曲名。","确认对应音乐后端已配置。","如果只有歌词失败，先继续播放歌曲。","记录第一条音乐日志。"],
+    "causes":["后端未配置或登录状态失效。","歌曲资源不可用。","服务商限速或接口暂时错误。","歌词接口失败但不一定影响播放。"],
+    "verification":["至少搜索和播放流程恢复，或页面明确说明该服务不可用。"],
+    "logGuide":{"where":"F12 → Console 和 Network。","keywords":["获取歌曲详情最终失败","播放歌曲时发生最终错误","歌曲缓存","歌词获取失败"],"safeExcerpt":"只提供歌曲 ID、状态码和失败阶段。","redact":["Cookie","Authorization","完整音频地址","用户账号"]},
+    "escalation":{"contactProviderWhen":["服务商返回鉴权、限速或服务器错误。"],"contactDeveloperWhen":["本地播放器在多个可用歌曲上都稳定失败。"],"include":["版本、失败阶段、歌曲 ID、状态码、脱敏错误"]},"related":["storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

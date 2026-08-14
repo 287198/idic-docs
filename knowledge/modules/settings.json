@@ -1,0 +1,10 @@
+[
+  {
+    "id":"settings-overview","moduleId":"settings","title":"找到设置入口","aliases":["设置在哪里","怎么配置","设置页面"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"从主界面进入设置，再按功能进入对应的设置分区。",
+    "steps":["打开侧边栏或主界面的设置入口。","选择要配置的分区。","修改设置。","点击对应页面底部的保存设置。"],
+    "causes":[],"verification":["返回设置首页时，对应分区摘要显示新的状态。"],
+    "logGuide":{"where":"设置页面出错时按 F12 打开 Console。","keywords":["设置页渲染失败","[IDIC] 设置页","save settings"],"safeExcerpt":"只截取打开设置或保存动作前后约 20 行。","redact":["api key","token","cookie","个人资料"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["保存设置后刷新页面仍丢失，或打开设置页稳定崩溃。"],"include":["版本、设置分区、操作顺序、页面提示、脱敏日志"]},"related":["api-settings","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

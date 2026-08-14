@@ -1,0 +1,10 @@
+[
+  {
+    "id":"phone-check-basics","moduleId":"phone-check","title":"使用手机检查","aliases":["手机检查怎么用","联系人","手机聊天","手机相册"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"手机检查模块模拟手机中的聊天、联系人、动态、备忘录、相册和钱包等内容。",
+    "steps":["从手机入口打开手机检查。","选择要查看的子页面。","按页面按钮新增或编辑内容。","保存后返回上一级。","重新进入子页面确认内容。"],
+    "causes":[],"verification":["对应子页面能打开，新增内容在返回后仍显示。"],
+    "logGuide":{"where":"F12 → Console；懒加载失败时重试模块入口。","keywords":["phone-check","手机检查","contacts","notes","album","wallet"],"safeExcerpt":"只提供子页面和错误类型，不提供手机内容。","redact":["联系人信息","聊天原文","钱包数据","图片内容","Token"]},
+    "escalation":{"contactProviderWhen":["手机检查中的外部 AI 请求返回服务商错误。"],"contactDeveloperWhen":["模块脚本加载失败、子页面稳定打不开或本地数据丢失。"],"include":["版本、子页面、加载或保存阶段、脱敏错误"]},"related":["storage","moments"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

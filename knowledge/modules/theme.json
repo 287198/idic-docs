@@ -1,0 +1,10 @@
+[
+  {
+    "id":"theme-basics","moduleId":"theme","title":"调整主题和聊天外观","aliases":["换皮肤","主题设置","气泡样式","空间装扮"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"主题、气泡、聊天视觉和空间装扮分别提供外观调整入口。",
+    "steps":["进入设置 → 主题或外观相关入口。","选择主题或预设。","按需要调整聊天气泡和视觉选项。","保存设置。","返回聊天检查效果。"],
+    "causes":[],"verification":["返回聊天后外观按新设置显示。"],
+    "logGuide":{"where":"F12 → Console。","keywords":["theme","chat visual","style","气泡","装扮"],"safeExcerpt":"只提供设置名称和错误类型。","redact":["图片私人地址","个人资料","聊天内容","Token"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["主题或气泡保存后稳定不生效，或主题懒加载失败。"],"include":["版本、主题名称、入口、浏览器、脱敏错误"]},"related":["settings","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

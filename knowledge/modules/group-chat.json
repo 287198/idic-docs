@@ -1,0 +1,19 @@
+[
+  {
+    "id":"group-chat-basics","moduleId":"group-chat","title":"使用群聊","aliases":["怎么建群","群聊怎么发言","群设置在哪里"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"在群聊中加入角色，按群设置控制成员、上下文和发言方式。",
+    "steps":["打开或创建一个群聊。","确认群成员和群公告。","需要时进入群设置调整匿名、上下文或气泡。","在输入框发送消息。","如果使用高级模式，等待发言顺序和回复生成完成。"],
+    "causes":[],"verification":["群成员按当前群设置发言，群聊消息正常保存。"],
+    "logGuide":{"where":"F12 → Console；高级群聊失败时重试一次并记录请求前后日志。","keywords":["[群聊API]","group","advanced","发言排序","AI-DIAG"],"safeExcerpt":"只提供状态码、模型名和错误类型，不提供群聊全文。","redact":["Authorization","API Key","群聊原文","角色设定","个人信息"]},
+    "escalation":{"contactProviderWhen":["群聊请求返回 401、403、429 或 5xx。"],"contactDeveloperWhen":["成员设置保存失败，或同一群聊流程稳定崩溃。"],"include":["版本、群聊模式、成员数量、状态码、脱敏错误、复现步骤"]},"related":["api-settings","character"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"group-chat-errors","moduleId":"group-chat","title":"群聊发言顺序或回复失败","aliases":["群聊不说话","群聊卡住","群成员不回复"],"intents":["error","recovery","logging"],"symptoms":["发言排序失败","群聊一直生成","只有部分成员回复"],"errorCodes":["401","429","5xx"],
+    "summary":"先停止重复触发，确认群聊模式和主 API 状态。",
+    "steps":["等待当前群聊请求结束。","确认群聊成员仍然存在且没有被禁用。","确认主 API 或副 API 的模型配置完整。","重新发送一条短触发消息。","记录第一条群聊错误。"],
+    "causes":["群聊排序或生成请求触发限速。","成员配置不完整。","模型返回格式不符合群聊解析要求。"],
+    "verification":["下一轮群聊能完成排序，并出现完整的成员发言。"],
+    "logGuide":{"where":"F12 → Console；必要时看 Network 的 chat/completions 请求。","keywords":["[群聊API]","群聊API","order","speeches","AI-DIAG"],"safeExcerpt":"只提供失败阶段和状态码。","redact":["API Key","完整群聊历史","角色提示词","用户隐私"]},
+    "escalation":{"contactProviderWhen":["API 返回 401、403、429、5xx。"],"contactDeveloperWhen":["模型请求成功但本地始终无法解析发言顺序。"],"include":["版本、群聊模式、失败阶段、模型名、脱敏响应片段"]},"related":["api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

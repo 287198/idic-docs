@@ -1,0 +1,10 @@
+[
+  {
+    "id":"offline-worldbook-basics","moduleId":"offline-worldbook","title":"使用线下配置和世界书","aliases":["世界书怎么用","离线预设","正则设置","全局世界书"],"intents":["setup","how-to"],"symptoms":[],"errorCodes":[],
+    "summary":"线下配置用于角色在没有在线生成时的预设、正则和全局世界书。",
+    "steps":["进入设置 → 给所有角色共用的线下配置。","选择默认线下预设。","按需要编辑正则和全局世界书。","保存设置。","打开角色聊天检查预设是否生效。"],
+    "causes":[],"verification":["角色离线或相关模式下使用了选中的预设，世界书条目按条件生效。"],
+    "logGuide":{"where":"F12 → Console；角色聊天生成异常时查看最终请求前的日志。","keywords":["offline","worldbook","preset","regex","Prompt"],"safeExcerpt":"只提供预设 ID、条目数量和错误类型，不提供提示词全文。","redact":["世界书正文","角色提示词","聊天历史","API Key"]},
+    "escalation":{"contactProviderWhen":["在线生成请求返回服务商错误。"],"contactDeveloperWhen":["预设或世界书保存、加载或应用稳定失败。"],"include":["版本、预设名称、条目数量、错误阶段、脱敏日志"]},"related":["character","core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

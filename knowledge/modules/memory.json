@@ -1,0 +1,19 @@
+[
+  {
+    "id":"memory-basics","moduleId":"memory","title":"配置本地记忆与语义召回","aliases":["记忆怎么开","长期记忆","向量记忆","语义搜索"],"intents":["setup","how-to"],"symptoms":[],"errorCodes":[],
+    "summary":"在设置中打开记忆相关能力；语义召回是可选增强，不打开时仍可使用本地召回。",
+    "steps":["进入设置 → 语义召回或记忆库相关分区。","先确认本地记忆功能是否启用。","如果启用语义召回，填写对应的兼容 API 和模型。","保存设置。","在一段对话后检查记忆是否被召回。"],
+    "causes":[],"verification":["设置摘要显示启用状态，角色对话中能引用已保存的相关记忆。"],
+    "logGuide":{"where":"F12 → Console；海马体或记忆库管理页也可能显示错误。","keywords":["[IDIC][Memory]","memory","召回","embedding","记忆"],"safeExcerpt":"只提供错误类型和条目数量，不提供记忆正文。","redact":["API Key","记忆正文","聊天原文","个人信息","Token"]},
+    "escalation":{"contactProviderWhen":["向量 API 返回 401、403、429 或 5xx。"],"contactDeveloperWhen":["保存或读取本地记忆稳定失败，或关闭语义召回后本地功能也失效。"],"include":["版本、记忆分区、启用状态、错误类型、是否影响聊天"]},"related":["hippocampus","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"memory-errors","moduleId":"memory","title":"记忆没有生效","aliases":["记忆不召回","记忆没保存","记忆错了"],"intents":["error","recovery"],"symptoms":["角色没有引用旧信息","记忆库为空或召回不相关"],"errorCodes":[],
+    "summary":"先确认记忆是否已保存，再区分本地召回和语义召回。",
+    "steps":["打开记忆库管理页，确认目标角色有记忆条目。","确认当前角色和聊天没有切错。","如果使用语义召回，检查 API 和模型是否完整。","关闭语义召回后测试一次本地召回。"],
+    "causes":["记忆尚未保存。","当前聊天或角色不是写入记忆的对象。","语义召回 API 未配置或请求失败。"],
+    "verification":["在同一角色的新消息中能看到相关历史信息被使用。"],
+    "logGuide":{"where":"F12 → Console。","keywords":["memory","recall","embedding","[IDIC][Memory]"],"safeExcerpt":"只提供时间、错误类型和条目数量。","redact":["记忆正文","聊天内容","密钥","Token"]},
+    "escalation":{"contactProviderWhen":["只有语义召回请求失败时。"],"contactDeveloperWhen":["本地记忆条目存在，但关闭外部能力后仍稳定无法召回。"],"include":["角色、记忆条目是否存在、启用的召回方式、脱敏错误"]},"related":["hippocampus"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

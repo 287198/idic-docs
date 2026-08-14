@@ -1,0 +1,10 @@
+[
+  {
+    "id":"weather-basics","moduleId":"weather","title":"设置 AI 天气地区","aliases":["天气怎么配","虚构地区天气","天气城市"],"intents":["setup","how-to"],"symptoms":[],"errorCodes":[],
+    "summary":"角色或用户的天气地区设置会影响天气简报；虚构地区会映射到参考城市。",
+    "steps":["打开用户天气或角色天气设置。","选择真实城市或填写虚构地区信息。","保存并同步。","回到天气页面查看缓存的预报。","如果映射失败，先使用本地参考城市。"],
+    "causes":[],"verification":["天气页面显示当前地区和当天预报。"],
+    "logGuide":{"where":"F12 → Console。","keywords":["Weather","天气系统","AI天气","open-meteo","reference city"],"safeExcerpt":"只提供地区名称、状态码和错误类型，不提供用户位置隐私。","redact":["精确位置","API Key","个人资料","Token"]},
+    "escalation":{"contactProviderWhen":["天气数据服务或 AI 映射服务返回明确错误。"],"contactDeveloperWhen":["保存地区、缓存或天气页面稳定失败。"],"include":["版本、地区模式、错误时间、状态码、脱敏日志"]},"related":["character"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

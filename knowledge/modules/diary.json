@@ -1,0 +1,10 @@
+[
+  {
+    "id":"diary-basics","moduleId":"diary","title":"使用日记","aliases":["日记怎么写","我的日记","TA的日记","日记设置"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"日记页分为我的日记和 TA 的日记，并提供日记设置入口。",
+    "steps":["打开日记模块。","选择我的日记或 TA 的日记。","阅读或创建当天内容。","需要时打开日记设置。","保存后重新打开页面确认。"],
+    "causes":[],"verification":["日记内容在重新打开页面后仍然存在。"],
+    "logGuide":{"where":"F12 → Console。","keywords":["[Diary]","日记","diary","离线消息加载异常"],"safeExcerpt":"只提供保存或加载失败的错误类型。","redact":["日记正文","个人信息","聊天内容","API Key"]},
+    "escalation":{"contactProviderWhen":["只有 AI 生成日记请求返回服务商错误时。"],"contactDeveloperWhen":["本地日记保存或加载稳定失败。"],"include":["版本、日记页签、操作、错误时间、脱敏日志"]},"related":["storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id":"voice-tools-basics","moduleId":"voice-tools","title":"配置语音识别和语音播报","aliases":["语音转文字","TTS怎么配","朗读","语音识别设置"],"intents":["setup","how-to"],"symptoms":[],"errorCodes":[],
+    "summary":"语音识别和语音播报分别在对应设置分区配置，可按需选择服务商。",
+    "steps":["进入设置 → 语音识别方式。","选择需要的识别服务并填写必要配置。","进入设置 → 配置语音播报。","选择播报服务并填写必要配置。","保存后分别测试识别和播放。"],
+    "causes":[],"verification":["语音输入能转成文字，或文本能按所选声音播放。"],
+    "logGuide":{"where":"F12 → Console；检查浏览器麦克风权限和 Network。","keywords":["STT","TTS","语音识别","语音播报","voice","audio"],"safeExcerpt":"只提供服务类型、权限状态和错误类型。","redact":["音频内容","API Key","Authorization","Cookie","个人信息"]},
+    "escalation":{"contactProviderWhen":["识别或播报服务返回鉴权、限速或服务器错误。"],"contactDeveloperWhen":["权限正常、配置完整，但本地音频转换或播放稳定失败。"],"include":["版本、服务类型、权限状态、错误名、脱敏日志"]},"related":["calls"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"voice-tools-errors","moduleId":"voice-tools","title":"语音识别或播报失败","aliases":["语音没识别出来","TTS没声音","麦克风权限"],"intents":["error","recovery","logging"],"symptoms":["录音后没有文字","播放无声音","识别请求失败"],"errorCodes":["401","403","408","429","5xx"],
+    "summary":"先检查设备权限，再确认对应服务配置。",
+    "steps":["确认浏览器或系统允许麦克风。","确认语音服务的地址、密钥和模型已配置。","用一段短音频或短文本测试。","记录失败阶段：录音、上传、识别、生成或播放。","保存第一条脱敏错误。"],
+    "causes":["麦克风权限被拒绝。","服务配置不完整。","音频格式或网络请求不被服务接受。","服务商限速或暂时不可用。"],
+    "verification":["短音频能转文字，或短文本能播放。"],
+    "logGuide":{"where":"F12 → Console 和 Network。","keywords":["语音识别","TTS","voice","audio","NotAllowedError"],"safeExcerpt":"只提供阶段、状态码和浏览器权限状态。","redact":["音频内容","Authorization","API Key","Cookie"]},
+    "escalation":{"contactProviderWhen":["外部语音服务返回 401/403/429/5xx。"],"contactDeveloperWhen":["浏览器权限正常且服务可用，但本地转换或播放稳定失败。"],"include":["版本、设备、浏览器、权限、服务、脱敏错误"]},"related":["calls"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

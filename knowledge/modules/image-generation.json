@@ -1,0 +1,19 @@
+[
+  {
+    "id":"image-generation-basics","moduleId":"image-generation","title":"配置和使用统一生图","aliases":["AI画图","生图怎么用","图片生成","生图设置"],"intents":["setup","how-to"],"symptoms":[],"errorCodes":[],
+    "summary":"统一生图设置集中管理图片生成 API 和参考图能力。",
+    "steps":["进入设置 → 统一生图设置。","选择兼容的图片生成服务。","填写地址、密钥和模型等必需字段。","保存设置。","在聊天或对应功能入口提交一条简短描述测试。"],
+    "causes":[],"verification":["测试请求返回图片或明确的模拟/失败结果。"],
+    "logGuide":{"where":"F12 → Console 和 Network。","keywords":["生图","image generation","image-generation","用户预览生图失败","reference image"],"safeExcerpt":"只提供状态码、模型名和失败阶段，不提供图片或提示词原文。","redact":["API Key","Authorization","参考图私人地址","完整提示词","个人信息"]},
+    "escalation":{"contactProviderWhen":["图片服务返回鉴权、限速或服务器错误。"],"contactDeveloperWhen":["配置完整且服务可用，但前端预览、上传或解析稳定失败。"],"include":["版本、模型、失败阶段、状态码、脱敏错误"]},"related":["settings","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"image-generation-errors","moduleId":"image-generation","title":"生图失败或预览打不开","aliases":["画图失败","图片生成失败","参考图加载失败"],"intents":["error","recovery","logging"],"symptoms":["请求失败","返回文字而不是图片","预览为空"],"errorCodes":["400","401","403","408","429","5xx"],
+    "summary":"先确认是服务请求失败、图片上传失败还是前端预览失败。",
+    "steps":["记录失败阶段。","检查生图地址、密钥和模型。","用不带参考图的短描述测试。","如果请求成功但预览失败，刷新页面后重试一次。","保留状态码和第一条错误。"],
+    "causes":["模型或接口不支持当前请求字段。","服务商限速或鉴权失败。","参考图地址、格式或大小不被接受。","前端无法读取返回图片。"],
+    "verification":["短描述能够生成并正常显示图片。"],
+    "logGuide":{"where":"F12 → Network 查看失败请求状态，Console 查看解析错误。","keywords":["生图失败","图片上传失败","打开图片预览失败","reference image"],"safeExcerpt":"只提供状态码、响应错误类型和图片格式。","redact":["Authorization","API Key","完整提示词","图片私人地址"]},
+    "escalation":{"contactProviderWhen":["服务商返回 400/401/403/429/5xx。"],"contactDeveloperWhen":["服务返回成功，但只有 IDIC.Chat 无法显示或解析。"],"include":["版本、模型、图片格式、状态码、脱敏错误"]},"related":["api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id":"calls-basics","moduleId":"calls","title":"使用语音或视频通话","aliases":["怎么打电话","语音通话","视频通话","通话记录"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"在聊天功能面板选择语音通话或视频通话，结束后可查看记录或转写入口。",
+    "steps":["打开角色聊天。","打开功能面板。","选择语音通话或视频通话。","按页面提示允许麦克风或摄像头权限。","结束通话后从通话记录查看结果。"],
+    "causes":[],"verification":["通话页面能打开，权限允许后能看到通话状态。"],
+    "logGuide":{"where":"F12 → Console；通话页面同时检查浏览器权限提示。","keywords":["voice-call","video-call","TTS","permission","transcript"],"safeExcerpt":"只提供权限状态、错误类型和时间。","redact":["音频内容","视频内容","Authorization","Cookie","个人信息"]},
+    "escalation":{"contactProviderWhen":["只有通话中的 AI 或 TTS 请求返回服务商错误时。"],"contactDeveloperWhen":["权限已允许但页面无法启动、通话状态卡住或记录稳定丢失。"],"include":["版本、浏览器、设备、权限状态、通话类型、脱敏错误"]},"related":["voice-tools","core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"calls-errors","moduleId":"calls","title":"通话没有声音或无法启动","aliases":["通话没声音","麦克风打不开","视频黑屏"],"intents":["error","recovery","logging"],"symptoms":["无法获得麦克风权限","通话页面没有声音","视频画面为空"],"errorCodes":["403","408"],
+    "summary":"先检查浏览器或系统权限，再确认页面没有被其他应用占用。",
+    "steps":["检查浏览器地址栏的麦克风和摄像头权限。","允许 IDIC.Chat 使用需要的设备。","关闭其他占用麦克风或摄像头的应用。","退出通话并重新进入。","仍失败时记录浏览器 Console 的第一条错误。"],
+    "causes":["浏览器或系统权限被拒绝。","设备被其他应用占用。","网络或通话服务请求超时。"],
+    "verification":["重新进入通话后能看到权限已允许，并出现音频或视频状态。"],
+    "logGuide":{"where":"F12 → Console；Network 只查看失败请求状态。","keywords":["permission","NotAllowedError","NotReadableError","voice-call","video-call"],"safeExcerpt":"只提供错误名和浏览器版本。","redact":["音视频内容","Cookie","Token","个人信息"]},
+    "escalation":{"contactProviderWhen":["通话服务接口返回 5xx 或鉴权错误。"],"contactDeveloperWhen":["权限正常、设备可用但 IDIC.Chat 稳定无法启动。"],"include":["版本、浏览器、系统、权限、错误名、复现步骤"]},"related":["voice-tools"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

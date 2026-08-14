@@ -1,0 +1,10 @@
+[
+  {
+    "id":"moments-basics","moduleId":"moments","title":"使用动态","aliases":["朋友圈怎么发","发说说","动态相册","动态设置"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"动态模块包含文字、图片、评论、回复、提及和空间装扮。",
+    "steps":["打开动态。","在发布入口选择文字或图片类型。","填写内容并发布。","需要时打开评论、回复或提及标签查看互动。","从动态设置调整空间装扮和动态选项。"],
+    "causes":[],"verification":["新动态出现在自己的动态页，互动标签能显示对应内容。"],
+    "logGuide":{"where":"F12 → Console；图片发布失败时同时看 Network。","keywords":["moments","动态","album","feed","upload"],"safeExcerpt":"只提供失败操作、状态码和文件类型，不提供图片内容。","redact":["Cookie","Authorization","图片私人地址","个人信息","聊天原文"]},
+    "escalation":{"contactProviderWhen":["上传或云端请求返回明确的权限、限速或服务器错误。"],"contactDeveloperWhen":["本地动态列表、发布或设置保存稳定失败。"],"include":["版本、动态操作、文件类型、状态码、脱敏日志"]},"related":["storage","theme"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "id":"movie-basics","moduleId":"movie","title":"使用电影模块","aliases":["怎么看电影","观影","电影播放器","弹幕"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"电影模块提供电影首页、观看页、播放器和弹幕相关入口。",
+    "steps":["打开电影模块。","在电影首页选择内容。","进入观看页。","按播放器提示播放。","需要时打开弹幕或相关控制。"],
+    "causes":[],"verification":["观看页能打开，播放器显示加载或播放状态。"],
+    "logGuide":{"where":"F12 → Console 和 Network。","keywords":["movie","player","danmaku","视频","Termux"],"safeExcerpt":"只提供内容 ID、状态码和失败阶段。","redact":["Cookie","Authorization","私人播放地址","个人信息"]},
+    "escalation":{"contactProviderWhen":["视频来源或后端服务返回明确的鉴权、限速或服务器错误。"],"contactDeveloperWhen":["电影首页、观看页或播放器在多个内容上稳定打不开。"],"include":["版本、内容 ID、失败阶段、浏览器、脱敏错误"]},"related":["storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

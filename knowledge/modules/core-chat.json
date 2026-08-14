@@ -1,0 +1,19 @@
+[
+  {
+    "id":"core-chat-basics","moduleId":"core-chat","title":"开始聊天","aliases":["聊天怎么用","怎么发消息","角色不回话"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"从聊天列表打开会话，在输入框写消息并发送。",
+    "steps":["打开聊天列表。","选择一个角色或群聊。","在底部输入框写消息。","点击发送。"],
+    "causes":[],"verification":["消息出现在会话中，并收到对方回复或看到正在输入状态。"],
+    "logGuide":{"where":"网页端按 F12 打开开发者工具，再打开 Console。","keywords":["[IDIC][ChatCore]","AI-DIAG","chat"],"safeExcerpt":"只截取发送动作前后约 20 行。","redact":["api key","token","cookie","authorization","用户消息中的个人信息"]},
+    "escalation":{"contactProviderWhen":["出现 401、403、429 或服务商明确的 5xx。"],"contactDeveloperWhen":["同一角色和同一操作稳定复现本地错误，且 API 在其他客户端正常。"],"include":["版本、平台、模块、操作、时间、页面提示、脱敏后的第一条错误"]},"related":["api-settings","character","group-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"core-chat-errors","moduleId":"core-chat","title":"消息发出后没有回复","aliases":["AI不回复","一直转圈","发送失败"],"intents":["error","recovery","logging"],"symptoms":["消息已显示但没有回复","发送按钮无反应"],"errorCodes":["401","403","408","429","5xx"],
+    "summary":"先确认主 API 配置，再用一条短消息测试。",
+    "steps":["等待当前请求结束，不要连续点击发送。","打开设置 → 聊天模型，确认地址、密钥和模型都已填写。","点击测试连接或发送一条短消息。","记录页面提示和第一条 Console 错误。"],
+    "causes":["API 地址、密钥或模型未配置。","服务商限速。","网络、代理或 CORS 阻止请求。","模型服务返回了无法解析的结果。"],
+    "verification":["短消息能够收到回复，并且 Console 不再出现同类错误。"],
+    "logGuide":{"where":"F12 → Console；需要请求详情时打开 Network 后重试一次。","keywords":["[IDIC][ChatCore]","API请求失败","HTTP错误","AI-DIAG"],"safeExcerpt":"只提供重试动作前后约 20 行或单个失败请求的状态码。","redact":["Authorization","Bearer 后的密钥","Cookie","完整请求体","角色提示词","聊天原文"]},
+    "escalation":{"contactProviderWhen":["401/403：密钥或权限问题。","429：连续限速。","5xx：服务商返回服务器错误。"],"contactDeveloperWhen":["配置正确、服务商状态正常，但只有 IDIC.Chat 稳定复现。"],"include":["IDIC.Chat 版本、浏览器、模块、时间、状态码、脱敏错误、已尝试步骤"]},"related":["api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]

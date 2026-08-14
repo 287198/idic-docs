@@ -1,0 +1,19 @@
+[
+  {
+    "id":"api-settings-basics","moduleId":"api-settings","title":"配置主 API","aliases":["主API怎么填","配置 DeepSeek","配置 Gemini","模型怎么选"],"intents":["setup","how-to"],"symptoms":[],"errorCodes":[],
+    "summary":"在聊天模型设置中填写兼容 OpenAI Chat Completions 的地址、密钥和模型。",
+    "steps":["进入设置 → 聊天模型。","填写 API 地址。","填写 API Key；不要把密钥发给机器人或贴进日志。","选择或填写模型名称。","保存设置后用一条短消息测试。"],
+    "causes":[],"verification":["模型设置摘要显示已配置，测试消息可以收到回复。"],
+    "logGuide":{"where":"F12 → Network，重试一次后查看 chat/completions 请求的状态码；也看 Console。","keywords":["chat/completions","[群聊API]","API请求失败","主 API"],"safeExcerpt":"只提供 URL 的路径部分、状态码和错误类型；不要提供完整请求头或请求体。","redact":["Authorization","Bearer 后的密钥","Cookie","完整 API URL 中的私有域名","聊天内容"]},
+    "escalation":{"contactProviderWhen":["401/403、429、服务商 5xx。"],"contactDeveloperWhen":["同一配置在其他客户端正常，但 IDIC.Chat 持续失败。"],"include":["模型名、状态码、时间、脱敏错误、是否可在其他客户端复现"]},"related":["core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"api-settings-errors","moduleId":"api-settings","title":"模型列表或 API 请求失败","aliases":["拉不到模型","401","429","接口报错"],"intents":["error","recovery","logging"],"symptoms":["模型列表为空","保存后仍无法发送","请求返回 HTTP 状态码"],"errorCodes":["400","401","403","404","408","429","5xx"],
+    "summary":"先看状态码，再决定改配置、等待限速还是联系服务商。",
+    "steps":["记录状态码和服务商返回的第一句错误。","401 或 403：重新检查密钥权限。","404：确认 API 地址包含正确的兼容接口路径。","429：停止重复请求，等待后再试。","5xx：到服务商状态页确认服务状态。"],
+    "causes":["400：请求字段或模型名不符合服务商要求。","401/403：密钥无效、过期或没有权限。","404：地址或接口路径不正确。","408：请求超时或网络不稳定。","429：超过服务商限速。","5xx：服务商内部错误。"],
+    "verification":["状态码消失，模型列表可加载或短消息能正常回复。"],
+    "logGuide":{"where":"F12 → Network → 失败请求 → Status；Console 可查看应用侧错误。","keywords":["chat/completions","models","429","401","403","404"],"safeExcerpt":"只截取状态码和响应中的通用错误字段。","redact":["Authorization","api_key","Cookie","完整请求体","用户消息"]},
+    "escalation":{"contactProviderWhen":["401/403 仍持续且确认密钥有效。","429 持续超过等待时间。","5xx 在服务商状态页也有异常。"],"contactDeveloperWhen":["状态码正常但前端解析失败，或只有 IDIC.Chat 复现。"],"include":["应用版本、状态码、模型名、时间、脱敏响应、重现步骤"]},"related":["core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  }
+]
