@@ -1,0 +1,469 @@
+{
+  "schemaVersion": "1.0.0",
+  "appVersion": "2.5.77",
+  "modules": [
+    {
+      "moduleId": "core-chat",
+      "displayName": "聊天与角色对话",
+      "aliases": [
+        "聊天",
+        "对话",
+        "发消息",
+        "AI不回复"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "core-chat-basics",
+        "core-chat-errors"
+      ]
+    },
+    {
+      "moduleId": "settings",
+      "displayName": "设置总览",
+      "aliases": [
+        "设置",
+        "配置",
+        "选项"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "settings-overview"
+      ]
+    },
+    {
+      "moduleId": "api-settings",
+      "displayName": "聊天模型与 API 设置",
+      "aliases": [
+        "主API",
+        "副API",
+        "模型",
+        "接口",
+        "DeepSeek",
+        "Gemini"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "api-settings-basics",
+        "api-settings-errors",
+        "http-400",
+        "http-401-403",
+        "http-404-408",
+        "http-429",
+        "http-5xx"
+      ]
+    },
+    {
+      "moduleId": "memory",
+      "displayName": "本地记忆库与语义召回",
+      "aliases": [
+        "记忆",
+        "长期记忆",
+        "向量记忆",
+        "语义召回"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "memory-basics",
+        "memory-errors"
+      ]
+    },
+    {
+      "moduleId": "hippocampus",
+      "displayName": "海马体",
+      "aliases": [
+        "海马体",
+        "在线记忆",
+        "记忆同步"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "hippocampus-basics",
+        "hippocampus-errors",
+        "hippocampus-deployment"
+      ]
+    },
+    {
+      "moduleId": "group-chat",
+      "displayName": "群聊",
+      "aliases": [
+        "群聊",
+        "群组",
+        "群设置",
+        "匿名"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "group-chat-basics",
+        "group-chat-errors"
+      ]
+    },
+    {
+      "moduleId": "character",
+      "displayName": "角色与角色设置",
+      "aliases": [
+        "角色",
+        "人物卡",
+        "角色卡",
+        "人设"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "character-basics"
+      ]
+    },
+    {
+      "moduleId": "moments",
+      "displayName": "动态",
+      "aliases": [
+        "朋友圈",
+        "动态",
+        "说说",
+        "相册"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "moments-basics"
+      ]
+    },
+    {
+      "moduleId": "pet",
+      "displayName": "宠物",
+      "aliases": [
+        "宠物",
+        "宠物房间",
+        "养宠物"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "pet-basics",
+        "pet-errors"
+      ]
+    },
+    {
+      "moduleId": "diary",
+      "displayName": "日记",
+      "aliases": [
+        "日记",
+        "我的日记",
+        "TA的日记"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "diary-basics"
+      ]
+    },
+    {
+      "moduleId": "calls",
+      "displayName": "语音通话与视频通话",
+      "aliases": [
+        "语音",
+        "视频",
+        "通话",
+        "语音电话"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "calls-basics",
+        "calls-errors"
+      ]
+    },
+    {
+      "moduleId": "music",
+      "displayName": "音乐与播放器",
+      "aliases": [
+        "音乐",
+        "点歌",
+        "网易云",
+        "Suno",
+        "歌词"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "music-basics",
+        "music-errors"
+      ]
+    },
+    {
+      "moduleId": "movie",
+      "displayName": "电影",
+      "aliases": [
+        "电影",
+        "观影",
+        "弹幕",
+        "播放器"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "movie-basics"
+      ]
+    },
+    {
+      "moduleId": "takeout",
+      "displayName": "外卖神券",
+      "aliases": [
+        "外卖",
+        "优惠券",
+        "神券",
+        "点餐"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "takeout-basics"
+      ]
+    },
+    {
+      "moduleId": "phone-check",
+      "displayName": "手机检查",
+      "aliases": [
+        "手机检查",
+        "手机",
+        "联系人",
+        "钱包",
+        "备忘录"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "phone-check-basics"
+      ]
+    },
+    {
+      "moduleId": "storage",
+      "displayName": "存储管理",
+      "aliases": [
+        "存储",
+        "缓存",
+        "数据管理",
+        "导出数据"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "storage-basics",
+        "storage-errors"
+      ]
+    },
+    {
+      "moduleId": "theme",
+      "displayName": "主题与外观",
+      "aliases": [
+        "主题",
+        "皮肤",
+        "气泡",
+        "装扮"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "theme-basics"
+      ]
+    },
+    {
+      "moduleId": "image-generation",
+      "displayName": "统一生图",
+      "aliases": [
+        "生图",
+        "图片生成",
+        "AI画图",
+        "图片"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "image-generation-basics",
+        "image-generation-errors"
+      ]
+    },
+    {
+      "moduleId": "voice-tools",
+      "displayName": "语音识别与语音播报",
+      "aliases": [
+        "语音识别",
+        "TTS",
+        "朗读",
+        "语音播报"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "voice-tools-basics",
+        "voice-tools-errors"
+      ]
+    },
+    {
+      "moduleId": "weather",
+      "displayName": "AI 天气",
+      "aliases": [
+        "天气",
+        "天气地区",
+        "虚构地区天气"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "weather-basics"
+      ]
+    },
+    {
+      "moduleId": "offline-worldbook",
+      "displayName": "线下配置与世界书",
+      "aliases": [
+        "世界书",
+        "离线预设",
+        "正则",
+        "线下配置"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "offline-worldbook-basics"
+      ]
+    },
+    {
+      "moduleId": "visual-novel",
+      "displayName": "视觉小说",
+      "aliases": [
+        "视觉小说",
+        "VN",
+        "剧情卡"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "werewolf",
+      "displayName": "AI 狼人杀",
+      "aliases": [
+        "狼人杀",
+        "AI狼人杀",
+        "游戏"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "gps",
+      "displayName": "城市地图与行动轨迹",
+      "aliases": [
+        "地图",
+        "GPS",
+        "行动轨迹",
+        "位置"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "wallet-ledger",
+      "displayName": "钱包与收支明细",
+      "aliases": [
+        "钱包",
+        "金币",
+        "收支",
+        "账本"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "favorites",
+      "displayName": "收藏与消息收藏",
+      "aliases": [
+        "收藏",
+        "消息收藏",
+        "角色收藏"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "notifications",
+      "displayName": "通知与主动消息",
+      "aliases": [
+        "通知",
+        "主动消息",
+        "预生成",
+        "提醒"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "pomodoro",
+      "displayName": "番茄钟",
+      "aliases": [
+        "番茄钟",
+        "计时器"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "accounting",
+      "displayName": "记账",
+      "aliases": [
+        "记账",
+        "账单"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "shopping",
+      "displayName": "购物",
+      "aliases": [
+        "购物",
+        "商品"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "sticker",
+      "displayName": "贴纸与 AI 表情",
+      "aliases": [
+        "贴纸",
+        "表情",
+        "AI表情"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "cos-export",
+      "displayName": "COS 导出",
+      "aliases": [
+        "COS",
+        "导出图片",
+        "对象存储"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "phone-launcher",
+      "displayName": "手机启动器",
+      "aliases": [
+        "手机桌面",
+        "启动器",
+        "经典QQ聊天器"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "game-center",
+      "displayName": "游戏中心",
+      "aliases": [
+        "游戏中心",
+        "游戏"
+      ],
+      "status": "partial",
+      "entryIds": []
+    },
+    {
+      "moduleId": "xhs-share",
+      "displayName": "小红书分享",
+      "aliases": [
+        "小红书",
+        "分享"
+      ],
+      "status": "partial",
+      "entryIds": []
+    }
+  ],
+  "entryCount": 38
+}
