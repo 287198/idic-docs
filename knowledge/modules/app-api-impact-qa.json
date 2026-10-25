@@ -1,0 +1,132 @@
+[
+  {
+    "id":"core-chat-api-and-history-impact","moduleId":"core-chat","title":"通讯和私聊调用什么 API，会保存哪些内容","aliases":["通讯用什么API","私聊走哪个模型","通话记录进聊天吗","搜索聊天扣token吗"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"普通私聊使用角色自己的主 API 覆盖，没有覆盖时使用全局主 API；搜索、翻历史、收藏和看资料不调用模型。成功保存的文本、语音转写、语音/视频通话文本会进入对应角色聊天历史，属于对主聊天影响最高的一类。",
+    "steps":["先确认当前角色是否设置了专属 API；有则优先检查它。","只搜索或翻历史时无需排查模型。","语音输入失败查 STT，角色发声失败查角色 TTS，视频实时服务另查视频配置。","删除或截断聊天前先备份；它会减少以后可见的近期原文，但不一定删除已形成的长期记忆。"],
+    "causes":["把角色专属线路误当成全局主 API。","把 STT/TTS/视频独立服务故障误当成私聊模型故障。"],
+    "verification":["能定位实际使用的角色/全局线路。","保存后的通话或转写文本出现在正确角色历史中。"],
+    "logGuide":{"where":"聊天页与 F12 → Network。","keywords":["chat/completions","STT","TTS","voice_call","video"],"safeExcerpt":"提供入口、角色是否覆盖 API、模型、状态码和错误摘要。","redact":["聊天正文","角色提示词","API Key","Authorization","私人音视频"]},
+    "escalation":{"contactProviderWhen":["实际线路返回鉴权、限速或服务端错误。"],"contactDeveloperWhen":["记录写入错误角色，或搜索历史意外触发模型调用。"],"include":["应用版本","入口","目标角色","实际线路","状态码","脱敏错误"]},
+    "related":["api-settings","calls","voice-tools","memory"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"group-chat-api-and-private-chat-impact","moduleId":"group-chat","title":"群聊用什么 API，会影响角色私聊吗","aliases":["群聊API","群聊记忆进私聊吗","NPC走哪个API","群聊角色失忆"],"intents":["how-to","setup","recovery"],"symptoms":["群里角色与私聊记忆不一致"],"errorCodes":[],
+    "summary":"群聊 Char 通常使用各自角色/主 API，NPC 或环境发言可使用副 API。群聊历史不会自动等同于每个角色的完整私聊历史；只有参与者可见、同步到私聊或写入群/角色记忆的内容，才可能在后续私聊中出现。",
+    "steps":["确认群成员、发言模式和当前轮到谁。","角色发言失败时查该角色/主 API；NPC/环境失败时再查对应副 API。","需要私聊延续时，使用群聊提供的同步/记忆入口，并核对目标角色。","不要把清群历史、清群记忆和同步私聊混成一个操作。"],
+    "causes":["不同角色走不同专属线路。","群历史、群记忆与私聊历史是不同数据层。","内容未对该角色可见或未同步。"],
+    "verification":["群内正确成员能连续发言。","同步后只有应参与的角色在相关私聊中利用该经历。"],
+    "logGuide":{"where":"群设置、群记忆和 Network。","keywords":["group","NPC","memory","sync","群聊"],"safeExcerpt":"提供群模式、成员数量、失败角色、线路类别和错误类型。","redact":["群聊正文","角色提示词","API Key","个人资料"]},
+    "escalation":{"contactProviderWhen":["对应角色或副 API 返回服务商错误。"],"contactDeveloperWhen":["群记忆同步到错误角色，或未参与角色获得完整群历史。"],"include":["应用版本","群模式","成员","目标角色","同步动作","脱敏错误"]},
+    "related":["core-chat","memory","api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"moments-api-and-chat-impact","moduleId":"moments","title":"动态调用什么 API，角色为什么会知道动态内容","aliases":["朋友圈用什么API","动态影响聊天吗","角色不发动态","动态评论进记忆吗"],"intents":["how-to","setup","recovery"],"symptoms":["动态没有角色内容","角色不记得互动"],"errorCodes":[],
+    "summary":"手写、浏览和本地发布不一定调用模型；角色动态、评论或互动会按角色使用主 API，非角色账号、NPC 或批量素材可使用副 API。角色参与的动态事件可进入其经历记忆，后续相关话题可能回流主聊天，但不会保证下一句主动复述。",
+    "steps":["先发一条纯文字测试动态并确认可见范围。","需要角色参与时，核对目标角色、生成开关与主/副 API 配置。","完成评论或互动后，到角色记忆库或相关聊天话题验证，而不是只问无关问题。","只有图片生成失败时才查生图 API；文字互动与生图是不同线路。"],
+    "causes":["可见范围不包含目标角色。","角色生成线路或副 API 缺失。","动态只发布未产生角色参与事件。","相关记忆存在但当前话题未触发。"],
+    "verification":["动态对目标角色可见并出现预期互动。","相关话题中角色可利用该经历，其他无关角色不会获得内容。"],
+    "logGuide":{"where":"动态设置、目标动态和 Network。","keywords":["moments","comment","visibility","memory","动态"],"safeExcerpt":"提供动作、可见范围、目标角色、线路和状态码。","redact":["动态正文","私人图片","API Key","个人资料"]},
+    "escalation":{"contactProviderWhen":["角色/副 API 或生图服务返回错误。"],"contactDeveloperWhen":["可见范围泄漏，或已完成互动稳定不写入正确角色。"],"include":["应用版本","动态类型","目标角色","可见范围","线路","脱敏错误"]},
+    "related":["core-chat","memory","image-generation"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"diary-api-and-chat-impact","moduleId":"diary","title":"日记什么时候调用 API，谁能在聊天中看到","aliases":["日记用什么API","交换日记","日记可见范围","角色会读我的日记吗"],"intents":["how-to","setup","recovery"],"symptoms":["角色看不到日记","不该看的角色提到日记"],"errorCodes":[],
+    "summary":"手写、保存和浏览自己的日记不调用模型；角色日记与交换回应使用主 API，选题/日程素材等辅助步骤可使用副 API 2并按模块规则回退。角色近期日记摘要可进入其主聊天背景；你的日记主要按可见角色和相关话题注入。",
+    "steps":["写日记前选对顶部角色空间和可见范围。","手写保存后刷新，确认正文仍在。","生成 TA 的日记或交换回应时再检查主 API；素材步骤失败再查副 API 2。","在聊天提到“日记、手账、交换”等相关词验证注入。","可见范围选错时立即修正，不要以为隐藏页面就能阻止上下文读取。"],
+    "causes":["顶部角色空间或可见范围选错。","生成与浏览是不同线路。","日记背景按角色和话题注入，不保证无关聊天主动出现。"],
+    "verification":["正确角色在相关话题中可利用可见摘要。","未授权角色不能读取该日记背景。"],
+    "logGuide":{"where":"日记页、可见范围和 Network。","keywords":["diary","visibility","exchange","日记"],"safeExcerpt":"提供日记类型、目标角色、可见范围、动作和错误类型。","redact":["日记正文","个人隐私","API Key","聊天内容"]},
+    "escalation":{"contactProviderWhen":["生成线路返回服务商错误。"],"contactDeveloperWhen":["可见范围错误注入，或保存后刷新丢失。"],"include":["应用版本","日记类型","目标角色","可见范围","脱敏现象"]},
+    "related":["core-chat","api-settings","memory"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"takeout-api-and-chat-impact","moduleId":"takeout","title":"外卖什么时候调用 AI，角色会记得订单吗","aliases":["外卖用什么API","角色外卖订单记忆","代付接单","配送进食状态"],"intents":["how-to","setup","recovery"],"symptoms":["角色不知道外卖订单","菜单能看但AI生成失败"],"errorCodes":[],
+    "summary":"浏览现有菜单和本地下单不一定调用模型；生成商家/菜品、角色接单/代付、配送与进食文案主要使用主 API，部分整理任务优先副 API 1，图片另走生图 API。角色订单会写入经历记忆，当前进食状态也可进入聊天情境。",
+    "steps":["先用虚构地址和低价菜品完成本地下单。","涉及角色时核对用餐人和目标角色。","文字判断失败查主 API/副 API 1；只有菜品图片失败才查生图 API。","完成配送/进食后，在相关角色聊天询问订单。","记忆写入失败时保留订单状态和发生时间，不要重复下单。"],
+    "causes":["订单属于自己而非角色。","生成、图片和本地下单是不同线路。","订单状态尚未到可记录阶段。"],
+    "verification":["订单流程与钱包明细一致。","角色订单在相关话题中可被正确角色利用。"],
+    "logGuide":{"where":"当前订单、钱包明细和 Network。","keywords":["takeout","order","memory","eating","外卖"],"safeExcerpt":"提供订单状态、用餐人、线路和错误类型。","redact":["真实地址","订单正文","API Key","个人资料"]},
+    "escalation":{"contactProviderWhen":["模型或生图线路返回服务商错误。"],"contactDeveloperWhen":["重复扣款、订单状态丢失或写入错误角色。"],"include":["应用版本","订单状态","用餐人","金额","线路","脱敏错误"]},
+    "related":["wallet-ledger","memory","image-generation"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"music-api-and-chat-impact","moduleId":"music","title":"音乐为什么能播放却不能一起听，分别用什么 API","aliases":["音乐用什么API","网易云接口","一起听影响聊天吗","原创音乐API","歌词"],"intents":["how-to","setup","recovery"],"symptoms":["聊天能用但音乐搜不到","能播放但角色不回应一起听"],"errorCodes":[],
+    "summary":"歌曲搜索、歌单、播放地址、歌词和扫码登录走 NeteaseCloudMusicApi；原创音乐走独立音乐生成服务；角色一起听的对话仍走角色主 API。单独听歌通常不影响主聊天，一起听时当前歌曲、歌词片段和播放状态会注入聊天，邀请卡片会留在历史。",
+    "steps":["普通曲库失败先测试网易云 Endpoint，不要填聊天 API 地址。","原创音乐失败检查独立音乐生成 Key，不要排查网易云登录。","一起听时选择目标角色并确认邀请卡片已发送。","播放期间再测试角色对当前歌曲的回应。","仅收藏歌曲不会自动写成角色长期记忆。"],
+    "causes":["把曲库、原创音乐和角色对话三条线路混为一谈。","一起听未建立或目标角色不对。","歌曲源失效或网易云服务不可用。"],
+    "verification":["曲库搜索/歌词和原创生成可分别最小测试。","一起听期间角色能利用当前歌曲背景，结束后不再持续注入。"],
+    "logGuide":{"where":"音乐设置、播放器和 Network。","keywords":["netease","music","lyrics","listen together","一起听"],"safeExcerpt":"提供失败阶段、Endpoint 类型、目标角色、状态码和错误摘要。","redact":["Cookie","扫码登录态","API Key","歌词大段正文","个人歌单隐私"]},
+    "escalation":{"contactProviderWhen":["网易云或原创音乐服务返回持续错误。"],"contactDeveloperWhen":["一起听状态未注入正确角色或结束后仍错误残留。"],"include":["应用版本","失败阶段","服务类型","目标角色","脱敏错误"]},
+    "related":["core-chat","api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"movie-api-and-chat-impact","moduleId":"movie","title":"电影分析用什么 API，观影会变成共同记忆吗","aliases":["电影用什么API","观影总结","分析画面","电影影响主聊天","保存总结"],"intents":["how-to","setup","recovery"],"symptoms":["观影结束后角色不记得","画面分析失败"],"errorCodes":[],
+    "summary":"观影聊天和立即分析画面使用电影页自己的视觉/对话 API；结束总结使用独立总结 API，未配置时可按页面规则回退视觉线路。只有结束时选择保存总结，才会把这次观影交接到角色上下文；不保存则不把整段当作共同经历。",
+    "steps":["在电影页确认视觉/对话线路；复制全局主 API 只是初始配置，不代表永远同步。","选择角色并播放可访问的视频。","只有需要时才点“立即分析画面”；私人视频会提交当前画面给模型。","结束时选择保存总结或不保存。","保存后到角色聊天围绕影片提问；总结仍处理中时先等任务完成。"],
+    "causes":["电影 API 与全局主 API 配置不同。","结束时选择不保存，或总结尚未完成。","视觉线路能聊天但总结线路未配置。"],
+    "verification":["画面分析和总结分别使用预期线路。","保存总结后正确角色可在相关话题中召回，不保存时不把整段当共同经历。"],
+    "logGuide":{"where":"电影设置、观影结束页和 Network。","keywords":["movie","vision","summary","handoff","观影"],"safeExcerpt":"提供目标角色、动作、线路类别、任务状态和错误摘要。","redact":["视频画面","观影聊天","API Key","私人媒体地址"]},
+    "escalation":{"contactProviderWhen":["视觉或总结线路返回服务商错误。"],"contactDeveloperWhen":["选择不保存仍写入主聊天，或保存到错误角色。"],"include":["应用版本","目标角色","是否保存","线路","任务状态","脱敏错误"]},
+    "related":["core-chat","api-settings","memory"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"weather-api-and-chat-impact","moduleId":"weather","title":"天气用什么 API，为什么角色会知道天气","aliases":["天气用什么API","Open-Meteo","虚构城市天气","天气影响聊天","角色天气旧了"],"intents":["how-to","setup","recovery"],"symptoms":["角色说的天气与页面不一致","拒绝定位后没有天气"],"errorCodes":[],
+    "summary":"实时天气和预报走独立天气接口；虚构城市首次匹配参考城市时可调用主 API，失败后可用本地保守方案。用户天气与角色所在城市天气会自动进入聊天环境背景，但要在城市同步成功后才替换旧缓存。",
+    "steps":["允许城市级定位，或手动选择城市；不必填写真实门牌。","点同步/刷新并确认页面更新时间。","虚构城市映射失败时，手动指定气候相近的参考城市。","回到正确角色聊天测试天气话题。","页面新、角色旧时检查角色所在城市与缓存，而不是先换主 API Key。"],
+    "causes":["天气接口和虚构城市映射是不同线路。","修改城市后尚未同步，仍使用旧缓存。","用户城市与角色生活城市不是同一个字段。"],
+    "verification":["天气页显示新的城市与更新时间。","相关角色能区分用户天气和自己的生活环境天气。"],
+    "logGuide":{"where":"天气页和 Network。","keywords":["weather","Open-Meteo","geocode","城市","cache"],"safeExcerpt":"提供城市级名称、是否虚构、更新时间、状态码和错误类型。","redact":["精确位置","真实住址","API Key","个人资料"]},
+    "escalation":{"contactProviderWhen":["天气接口持续不可用。"],"contactDeveloperWhen":["同步成功后仍向错误角色注入旧城市。"],"include":["应用版本","用户/角色城市","更新时间","脱敏错误"]},
+    "related":["gps","core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"pet-api-and-chat-impact","moduleId":"pet","title":"宠物哪些操作用 API，会影响角色聊天吗","aliases":["宠物用什么API","宠物状态进聊天吗","角色是否在家","领养意愿"],"intents":["how-to","setup","recovery"],"symptoms":["宠物状态与聊天不一致"],"errorCodes":[],
+    "summary":"喂食、家具、皮肤和 3D 浏览主要在本地；刷新档案/监控文案用主 API，角色位置轻量判断用副 API 2，领养语义确认在副 API 1 完整时才调用。宠物档案、状态、近期事件与领养意愿可进入角色聊天和日程；聊天中的明确答复也可反向更新宠物系统。",
+    "steps":["确认当前选择的是正确角色。","本地换一件家具并刷新验证保存。","只有刷新档案/监控文案失败时查主 API；位置判断查副 API 2。","在聊天明确表达领养或拒绝，再回宠物页核对。","大型 3D 资源异常先换回内置资产，不要清角色记忆。"],
+    "causes":["宠物数据按角色隔离。","本地装扮与 AI 文案/状态判断是不同线路。","聊天表达不够明确，未触发领养语义确认。"],
+    "verification":["本地装扮无需 API 也能保存。","正确角色的宠物状态在相关聊天中可用，明确领养答复能同步。"],
+    "logGuide":{"where":"宠物页、角色聊天和 Network。","keywords":["pet","adoption","room","宠物","secondary"],"safeExcerpt":"提供目标角色、动作、线路类别和错误类型。","redact":["角色提示词","私人 3D 资源地址","API Key","聊天正文"]},
+    "escalation":{"contactProviderWhen":["档案或判断线路返回服务商错误。"],"contactDeveloperWhen":["状态同步到错误角色或本地装扮刷新丢失。"],"include":["应用版本","目标角色","动作","线路","脱敏错误"]},
+    "related":["core-chat","api-settings","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"image-generation-camera-gallery-impact","moduleId":"image-generation","title":"相机和相册生成用什么 API，会变成角色记忆吗","aliases":["相机用什么API","相册重绘","AI合拍","图片影响聊天吗","锁脸参考图"],"intents":["how-to","setup","recovery"],"symptoms":["聊天能用但相机不能生成","图片生成后角色不知道"],"errorCodes":[],
+    "summary":"相机先可用副 API 1或按配置回退主 API 组织提示词，再调用生图 Provider；相册导入/浏览/收藏/下载是本地操作，只有生成、重绘、编辑才调用 AI。成品默认只进相册，不自动成为角色共同记忆，必须发送聊天、发布动态或由模块明确记录。",
+    "steps":["先在设置 → 生图用 1 张小规格图片完成最小测试。","相机组织提示词失败查副 API 1/主 API；最终出图失败查生图 Provider。","实景合拍前确认原片和锁脸参考图有授权，因为会提交给图片服务。","生成后到相册确认成品。","想让角色知道时，把图片发送到正确聊天或动态；仅打角色标签只是筛选。"],
+    "causes":["提示词提炼与图片生成是两条线路。","聊天主 API 正常但生图 Provider 未配置。","相册标签被误认为角色已看过。"],
+    "verification":["提示词和出图可分别最小测试。","未分享图片不会自动成为共同经历，分享后正确角色可看到。"],
+    "logGuide":{"where":"生图设置、相机/相册和 Network。","keywords":["image","generation","edit","camera","gallery"],"safeExcerpt":"提供阶段、Provider、模型、图片数量、状态码和错误摘要。","redact":["API Key","真人原片","锁脸参考图","私人图片 URL","提示词私密信息"]},
+    "escalation":{"contactProviderWhen":["生图 Provider 返回鉴权、限速、安全策略或服务端错误。"],"contactDeveloperWhen":["生成成功但相册未保存，或未分享图片泄漏到错误角色。"],"include":["应用版本","入口","失败阶段","Provider/模型","脱敏错误"]},
+    "related":["api-settings","moments","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"phone-check-api-and-chat-impact","moduleId":"phone-check","title":"查手机是真的读取现实手机吗，会影响主聊天吗","aliases":["查手机用什么API","角色手机","会读现实手机吗","角色察觉到了","手机检查影响聊天"],"intents":["how-to","setup","recovery"],"symptoms":["角色察觉查手机操作","首次内容生成失败"],"errorCodes":[],
+    "summary":"查手机读取的是眠眠机生成并保存的角色虚拟手机，不是现实设备。首次生成聊天包、朋友圈、备忘录、相册和钱包等会混合使用主 API 与副 API 1；只浏览缓存通常不影响主聊天，但发消息、改备忘录、相册分组或锁定等改动会写入仅 AI 可见事件，并可能让角色立刻察觉。",
+    "steps":["选择目标角色后确认页面显示的是虚拟手机。","先只浏览通讯录、聊天、相册、朋友圈、备忘录和钱包。","遇到锁定内容先看解锁条件，不当作故障。","修改或发送前确认目标角色；页面提示“角色察觉到了”时按已经回流主聊天处理。","首次内容生成失败时查主 API 和副 API 1，普通浏览失败则查本地数据加载。"],
+    "causes":["把角色虚拟数据误认为现实手机权限。","浏览和修改的回流规则不同。","首次生成线路未配置，缓存尚不存在。"],
+    "verification":["只浏览不会新建察觉事件。","修改动作只写入当前角色，并能在主聊天产生预期反应。"],
+    "logGuide":{"where":"查手机页面、目标角色聊天和 Network。","keywords":["phone-check","system event","角色察觉","contacts","memo"],"safeExcerpt":"提供目标角色、浏览或修改、生成阶段和错误类型。","redact":["虚拟聊天正文","备忘录正文","相册图片","API Key","个人资料"]},
+    "escalation":{"contactProviderWhen":["首次生成线路返回服务商错误。"],"contactDeveloperWhen":["只浏览就错误写入察觉事件，或修改写入错误角色。"],"include":["应用版本","目标角色","操作","是否提示察觉","脱敏错误"]},
+    "related":["core-chat","api-settings","memory"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"offline-worldbook-preset-chat-impact","moduleId":"offline-worldbook","title":"预设和世界书会怎样改变角色聊天","aliases":["预设影响聊天吗","世界书用什么API","切换预设","线下模式","人设突然变了"],"intents":["how-to","setup","recovery"],"symptoms":["切换预设后角色语气改变","角色突然遵循另一套背景"],"errorCodes":[],
+    "summary":"查看、选择、导入和编辑预设/世界书通常是本地操作；只有明确的 AI 生成、扩写或分析按钮才调用所选线路。启用的人设、线上/线下剧情、世界书或风格预设会直接成为后续提示词，因此不新建聊天消息也能立刻改变角色回复。",
+    "steps":["先记录当前启用的角色预设、世界书和线上/线下模式。","一次只切换一项并保存。","回聊天用同一测试问题比较语气和事实。","角色突然跑偏时先恢复刚切换的预设，不要清空聊天或记忆。","世界书放稳定世界事实，不要塞整段临时对话。"],
+    "causes":["切换了风格或剧情预设。","角色同时挂载多个相互冲突的世界书条目。","把预设切换误认为只是外观变化。"],
+    "verification":["恢复预设后，同一测试问题回到预期风格。","世界书只在关键词/适用条件满足时提供稳定事实。"],
+    "logGuide":{"where":"预设、世界书和角色设置；保存失败时看 Console。","keywords":["preset","worldbook","offline","prompt","预设"],"safeExcerpt":"提供预设名称、启用状态、适用角色和错误类型。","redact":["预设正文","世界书正文","角色提示词","API Key","聊天内容"]},
+    "escalation":{"contactProviderWhen":["只有 AI 生成/分析按钮的外部请求失败。"],"contactDeveloperWhen":["保存的启用状态刷新丢失，或未挂载预设注入错误角色。"],"include":["应用版本","角色","预设/世界书名称","修改前后状态","脱敏错误"]},
+    "related":["character","core-chat","settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"character-relationship-graph-impact","moduleId":"character","title":"关系图用什么 API，为什么会改变称呼和态度","aliases":["关系用什么API","关系图影响聊天吗","AI分析世界书","称呼突然变了","NPC关系"],"intents":["how-to","setup","recovery"],"symptoms":["角色称呼或对第三人的态度改变","关系草稿没有生效"],"errorCodes":[],
+    "summary":"手动新增人物、连线、称谓和确认草稿不调用模型；AI 分析世界书和生成单侧印象只使用副 API 1且不回退主 API。只有已确认关系会进入私聊和群聊提示词，影响称呼、边界、亲疏和第三人态度；未确认草稿不会生效。",
+    "steps":["打开关系总览并选择正确人物。","手动建立双向关系时分别写清两个方向。","使用 AI 分析前确认副 API 1 已配置。","检查生成结果并人工确认；草稿阶段不要期待聊天改变。","称呼异常时检查已确认关系与角色自己的亲密关系设置。"],
+    "causes":["AI 草稿尚未确认。","副 API 1 未配置且该功能不回退。","双向关系只设置了一侧或对象合并错误。"],
+    "verification":["确认后，相关私聊/群聊中的称呼与边界符合关系。","未确认草稿不改变聊天。"],
+    "logGuide":{"where":"关系 App、角色设置和 Network。","keywords":["relationship","draft","secondary","关系","印象"],"safeExcerpt":"提供人物数量、关系方向、是否确认、线路和错误类型。","redact":["世界书正文","人物隐私","API Key","聊天内容"]},
+    "escalation":{"contactProviderWhen":["副 API 1 返回服务商错误。"],"contactDeveloperWhen":["未确认草稿生效，或确认关系注入错误人物。"],"include":["应用版本","人物与方向","是否确认","线路","脱敏现象"]},
+    "related":["group-chat","core-chat","api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "id":"wallet-ledger-api-and-chat-impact","moduleId":"wallet-ledger","title":"钱包会调用 API 或让角色看到余额吗","aliases":["钱包用什么API","夸特余额","角色能看到钱包吗","收支明细","红包代付"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"查看余额、流水、兑换确认和本地扣款不调用聊天模型；钱包不会把整份余额和流水自动塞进主聊天，但红包、代付、外卖或购物等业务可能把自己的卡片或事件写入聊天。",
+    "steps":["打开钱包，先看余额和一条收支明细。","若余额变化，按明细来源回到外卖、购物、小说支持、红包等对应模块核对。","判断角色是否知道某笔消费时，检查该业务是否发送过聊天卡片、系统事件或角色参与记录；不要只看钱包流水。","余额异常先停止重复支付并保留发生时间、金额和业务入口。"],
+    "causes":["钱包只是本地余额与流水容器，实际消费来自其他模块。","角色知道交易通常是因为交易卡片或业务事件，而不是钱包自动泄露全部账目。"],
+    "verification":["刷新后余额和明细一致。","未分享的普通余额不会被角色凭空复述；已发送的红包/代付卡片仍在聊天历史中。"],
+    "logGuide":{"where":"钱包明细和触发消费的业务页；异常时看 Console。","keywords":["wallet","ledger","balance","夸特","支付"],"safeExcerpt":"只提供时间、金额、业务类型和错误类型。","redact":["真实财务信息","订单隐私","聊天正文","API Key","个人资料"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["单次操作重复扣款、刷新后余额异常回滚或明细与余额不一致。"],"include":["应用版本","业务入口","时间","金额","操作次数","脱敏截图"]},
+    "related":["takeout","shopping","core-chat"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"accounting-api-and-chat-impact","moduleId":"accounting","title":"账本会让角色知道我的消费吗","aliases":["账本用什么API","记账影响聊天吗","角色知道我花了多少钱","近期账本"],"intents":["how-to","setup"],"symptoms":["角色提到近期账目"],"errorCodes":[],
+    "summary":"新增、编辑、删除和查看账目都在本地完成，不调用模型；但最近 10 条账本记录会作为“TA 的近期账本”进入角色在线主聊天背景，所以不要记录不希望角色看到的真实敏感财务信息。",
+    "steps":["打开账本新增一条低敏感测试记录。","刷新账本确认记录仍在。","回到角色在线主聊天，围绕近期消费提问，验证角色是否能利用背景。","不希望角色读取的真实账目应删除或不要录入测试角色共用的账本；美化或隐藏页面不等于隔离提示词。"],
+    "causes":["账本保存是本地动作，但近期记录会被主聊天上下文读取。","角色是否主动提起仍取决于当前话题、人设和上下文，不保证下一句复述。"],
+    "verification":["账本保存后可重开查看。","在相关话题中角色能利用近期记录；删除后不再作为近期账本注入。"],
+    "logGuide":{"where":"账本页面；保存失败时看 Console。","keywords":["accounting","账本","ledger","save"],"safeExcerpt":"只提供条目数量、是否保存和错误类型。","redact":["真实金额与备注","聊天正文","个人身份","API Key"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["账目保存后刷新丢失，或删除后仍稳定注入旧记录。"],"include":["应用版本","条目数量","保存/删除步骤","目标角色","脱敏现象"]},
+    "related":["core-chat","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"favorites-api-and-chat-impact","moduleId":"favorites","title":"收藏消息会强化角色记忆吗","aliases":["收藏用什么API","收藏影响记忆吗","取消收藏会删聊天吗","消息收藏"],"intents":["how-to","recovery"],"symptoms":[],"errorCodes":[],
+    "summary":"收藏、分组、筛选和取消收藏都是本地操作，不调用模型；收藏本身不会强化角色记忆，取消收藏也不会删除原聊天。",
+    "steps":["在聊天中收藏一条消息。","到收藏 App 新建分组并确认该消息可找到。","取消收藏后回到原会话，确认原消息仍在。","需要角色长期记住时，应使用重要记忆、总结或角色记忆库，而不是只点收藏。"],
+    "causes":["收藏保存的是索引，不是新的聊天事件或长期记忆。"],
+    "verification":["收藏列表变化符合操作，原消息不受影响。"],
+    "logGuide":{"where":"收藏页和原聊天；保存异常时看 Console。","keywords":["favorites","收藏","message"],"safeExcerpt":"提供分组、数量和错误类型。","redact":["收藏正文","聊天内容","个人信息","API Key"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["取消收藏误删原消息，或刷新后收藏索引稳定丢失。"],"include":["应用版本","操作步骤","是否仍有原消息","脱敏错误"]},
+    "related":["core-chat","memory"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"visual-novel-api-and-chat-impact","moduleId":"visual-novel","title":"小说什么时候调用 API，会变成角色记忆吗","aliases":["小说用什么API","章节为什么没发布","候选稿","小说影响主聊天吗","作者模式"],"intents":["how-to","setup","recovery"],"symptoms":["有大纲但没有目录正文","生成候选稿后读者看不到"],"errorCodes":[],
+    "summary":"普通浏览、阅读、收藏和手写不调用模型；大纲、章节、AI 读者评论、访谈和定时续写使用小说中选择的主 API/副 API。小说会读取作者角色资料保持文风，但正文默认不会自动成为角色真实经历。",
+    "steps":["读者只需打开作品、目录和阅读器；支持作品会使用夸特。","作者先在“我的 → 文学账号”开启作者模式，再新建作品并填写剧情指导。","生成大纲或“下一章候选稿”会调用所选线路。","候选稿不会自动出现在正式目录；打开全文确认后点“采用并正式发布”，除非该作品明确开启自动发布。","要让角色在主聊天中知道小说内容，应主动分享、写入设定/记忆或在聊天中提起。"],
+    "causes":["把候选稿误认为正式章节。","作品单独选择的 API 未配置或与默认线路不同。","把创作内容误认为角色真实经历。"],
+    "verification":["正式发布后章节出现在目录。","普通阅读不产生模型调用；生成动作能对应到选定线路。","未分享的正文不会自动被角色当成共同经历。"],
+    "logGuide":{"where":"小说创作管理页；失败时看 Network 和任务状态。","keywords":["novel","outline","chapter","candidate","publish"],"safeExcerpt":"提供作品状态、动作、线路类别、模型、状态码和第一句错误。","redact":["小说正文","剧情私稿","API Key","Authorization","个人资料"]},
+    "escalation":{"contactProviderWhen":["章节生成线路返回鉴权、限速或服务端错误。"],"contactDeveloperWhen":["候选稿采用成功但正式目录稳定不出现，或重复生成/扣费。"],"include":["应用版本","作品状态","动作","线路和模型","任务状态","脱敏错误"]},
+    "related":["api-settings","wallet-ledger","character"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"gps-api-and-chat-impact","moduleId":"gps","title":"GPS 是真实定位吗，会影响角色聊天吗","aliases":["GPS用什么API","虚拟城市","角色位置","位置会进聊天吗","定位隐私"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"建立虚拟地图、地点、路线和当前位置主要是本地操作；虚构城市与参考天气城市的映射可能使用主 API，天气本身走独立天气接口。地点话题触发时，当前地图、地点和家会进入角色聊天背景；定位卡片会直接留在聊天历史。",
+    "steps":["选择目标角色并新建一张虚拟城市地图。","使用虚构或城市级地点，不必填写现实门牌。","新增地点后设为当前位置或加入路线。","回到聊天提到“去哪、餐厅、电影院、约会”等地点话题，或发送定位卡片。","若角色位置不对，先确认选的是同一角色、同一地图和当前地点。"],
+    "causes":["GPS 数据按角色和地图归属，选错对象会像“没保存”。","地点背景通常按相关话题注入，不保证无关聊天中主动出现。","天气映射与 GPS 本地编辑是不同请求。"],
+    "verification":["重开 GPS 后地图和地点仍在。","相关地点话题中角色能使用城市指南；发送的定位卡片在历史中可见。"],
+    "logGuide":{"where":"GPS 页面；映射或天气失败时看 Network。","keywords":["GPS","map","location","weather","城市"],"safeExcerpt":"提供是否虚构城市、目标角色、地图/地点数量和错误类型。","redact":["真实精确地址","真实坐标","聊天正文","API Key","个人身份"]},
+    "escalation":{"contactProviderWhen":["天气或城市映射服务持续报错。"],"contactDeveloperWhen":["本地点保存后刷新丢失，或错误角色收到位置上下文。"],"include":["应用版本","目标角色","地图状态","是否发送定位卡片","脱敏错误"]},
+    "related":["weather","core-chat","character"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"pomodoro-api-and-chat-impact","moduleId":"pomodoro","title":"专注计时会调用 API 或写进聊天吗","aliases":["番茄钟用什么API","专注影响聊天吗","角色陪伴提醒","专注记录"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"计时、暂停、继续和本地提醒不调用模型；双击头像生成角色专属提醒时调用主 API。完成计时后，时长和任务名会作为系统性质的用户消息写进所选角色聊天历史，中途退出不应记成完成。",
+    "steps":["选择陪伴角色并设置 1–3 分钟测试任务。","开始后试一次暂停和继续。","需要专属提醒时再双击头像，并留意这一步会调用主 API。","等计时自然结束，回到该角色聊天核对完成记录。"],
+    "causes":["计时本身与角色生成提醒是两条路径。","只有完整完成才写入聊天；中断不会形成已完成事件。"],
+    "verification":["本地计时不依赖 API 也能完成。","完成记录只写入所选角色的聊天，并包含正确时长与任务名。"],
+    "logGuide":{"where":"专注页和所选角色聊天；提醒生成失败时看 Network。","keywords":["pomodoro","focus","专注","reminder"],"safeExcerpt":"提供时长、是否完成、目标角色、提醒是否生成和错误类型。","redact":["任务敏感内容","聊天正文","API Key","个人资料"]},
+    "escalation":{"contactProviderWhen":["只有 AI 专属提醒请求失败。"],"contactDeveloperWhen":["中途退出却写成完成，或完成后写入错误角色。"],"include":["应用版本","计时状态","目标角色","操作步骤","脱敏现象"]},
+    "related":["core-chat","api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"shopping-api-and-chat-impact","moduleId":"shopping","title":"购物什么时候用 AI，角色会知道我买了什么吗","aliases":["购物用什么API","代付砍价","角色知道订单吗","盲盒","购物影响聊天"],"intents":["how-to","setup","recovery"],"symptoms":[],"errorCodes":[],
+    "summary":"浏览、购物车、收藏和普通结算主要是本地流程；进货、搜索补货、促销和部分角色判断优先副 API 1，缺失时可能回退主 API。只有代付、砍价、请 TA 帮抽、分享订单等角色参与动作会以卡片或系统事件回流主聊天。",
+    "steps":["先浏览一件低价商品，加入购物车并核对夸特总价。","普通购买只检查钱包与订单；不需要让角色知道时不要点代付、砍价或分享。","需要角色参与时再选择目标角色，完成动作后回聊天确认卡片/事件。","AI 补货或商品生成失败时检查副 API 1，再看页面是否声明回退主 API。","盲盒批量导入只用可信图片包，并先做备份。"],
+    "causes":["把本地浏览误认为模型请求。","副 API 1 缺失或失败。","角色仅在参与/分享动作后获知订单，收藏和加购不会自动通知。"],
+    "verification":["普通浏览和加购不产生角色消息。","代付/砍价/分享完成后，正确角色聊天中出现对应记录。"],
+    "logGuide":{"where":"购物订单页与目标角色聊天；AI 补货失败时看 Network。","keywords":["shopping","order","代付","砍价","secondary"],"safeExcerpt":"提供动作、目标角色、订单状态、线路类别和错误类型。","redact":["真实地址","订单隐私","API Key","聊天正文","个人资料"]},
+    "escalation":{"contactProviderWhen":["AI 补货线路返回鉴权、限速或服务端错误。"],"contactDeveloperWhen":["普通浏览意外写入角色聊天，或角色参与完成后没有记录/重复扣款。"],"include":["应用版本","动作","目标角色","订单状态","线路","脱敏错误"]},
+    "related":["wallet-ledger","core-chat","api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"sticker-api-and-chat-impact","moduleId":"sticker","title":"表情包怎么让角色用，会影响记忆吗","aliases":["贴纸怎么用","AI表情","角色表情包仓库","表情描述","表情影响聊天吗"],"intents":["how-to","setup"],"symptoms":["表情已导入但角色不用","聊天面板找不到表情分组"],"errorCodes":[],
+    "summary":"导入、分组和勾选表情包主要是本地管理；图片描述帮助 AI 理解使用场景，但不会把图片自动写成长期记忆。要让用户或角色使用，还要分别启用“我的表情包”分组和角色“可用表情包分组”。",
+    "steps":["在角色表情包仓库新建分组并导入可信图片。","为每张图写一句简短语义，例如“困得睁不开眼”。","到“我的表情包”勾选聊天面板需要的分组并保存。","要让某个角色使用，再到聊天设置 → 对方信息 → 可用表情包分组勾选并保存。","回到该角色聊天测试；角色不一定每轮都发，应在合适语境中验证。"],
+    "causes":["只导入仓库但没有给用户面板或角色授权分组。","图片没有语义描述，模型难以选择。","当前角色与授权角色不一致。"],
+    "verification":["用户表情面板能看到分组。","正确角色在合适语境中可选用已授权表情。"],
+    "logGuide":{"where":"表情包仓库和角色设置；保存失败时看 Console。","keywords":["sticker","表情包","group","角色"],"safeExcerpt":"提供分组数量、授权对象和错误类型。","redact":["私人图片","图片 URL 中的凭据","角色设定","API Key"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["分组已保存并授权给正确角色，但刷新后丢失或面板稳定空白。"],"include":["应用版本","分组","目标角色","保存步骤","脱敏截图"]},
+    "related":["character","core-chat","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"notifications-offline-messages-impact","moduleId":"notifications","title":"主动消息和系统通知为什么时有时无","aliases":["主动消息不来","离线消息","后台通知","通知时有时无","角色主动找我"],"intents":["how-to","error","recovery"],"symptoms":["关闭页面后没有主动消息","只有打开 App 时收到","系统不显示通知"],"errorCodes":[],
+    "summary":"主动消息生成、消息写入和系统通知展示是三层：海马体/云端与同步的模型配置负责生成，生成结果写入角色会话，PWA/系统权限负责弹通知。免打扰、每日上限、基础间隔和手机系统后台限制都会让它看起来“时有时无”。",
+    "steps":["先打开 App 检查角色会话里是否已有主动消息；有消息无弹窗，优先排查通知权限，不是生成失败。","确认设置 → 海马体记忆系统已连接，并给当前角色开启海马体/离线主动消息。","检查是否同步了云端生成所需的主 API 配置，并确认你信任该边界。","检查免打扰时段、每日最多条数、基础间隔和通知正文设置。","检查浏览器/PWA与手机系统通知权限、电池优化和后台限制；系统彻底结束 App 后不保证无限后台运行。","先只给一个主要角色开启，观察一次完整间隔，避免频繁手动测试造成重复请求。"],
+    "causes":["消息已生成但系统通知权限被拒绝。","角色未单独开启，或海马体/云端配置不完整。","处于免打扰、达到每日上限或尚未过基础间隔。","手机系统终止后台任务。","云端模型生成失败。"],
+    "verification":["能区分“会话里无消息”和“有消息但无通知”。","目标角色在允许时段收到一条主动消息，系统通知按隐私设置展示。"],
+    "logGuide":{"where":"海马体设置、角色会话、系统通知权限；生成失败再看海马体日志。","keywords":["offline","notification","主动消息","quiet hours","sync"],"safeExcerpt":"提供角色是否开启、时段、上限、会话是否有消息、系统权限和错误类型。","redact":["消息正文","Supabase Key","API Key","通知私人内容","个人资料"]},
+    "escalation":{"contactProviderWhen":["云端生成线路返回鉴权、限速或服务端错误。"],"contactDeveloperWhen":["已生成消息未写入正确会话，或权限允许却稳定不触发通知。"],"include":["应用版本","平台/PWA","目标角色","配置开关","时间段","会话与通知对比","脱敏错误"]},
+    "related":["hippocampus","core-chat","api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"phone-launcher-widgets-impact","moduleId":"phone-launcher","title":"自由桌面、小组件会不会改掉 App 数据","aliases":["自由桌面","桌面小组件","删除组件会删照片吗","经典版自由版","桌面预设"],"intents":["how-to","recovery"],"symptoms":["切换桌面后找不到 App","删除组件后担心数据丢失"],"errorCodes":[],
+    "summary":"经典版与自由版是两套入口和布局，切换不会删除业务数据；时钟、图片、相册、天气、音乐等小组件主要读取底层 App 状态，摆放、缩放或删除组件不等于删除照片、歌曲或聊天。",
+    "steps":["在设置切换桌面版本并等待重新载入。","自由桌面长按进入 App 库，把缺少的 App 添加回来。","添加一个小组件，测试移动和缩放。","删除测试组件后，到对应 App 确认原数据仍在。","大改桌面前导出桌面预设；它不是整机备份。"],
+    "causes":["App 没摆在当前桌面，但仍存在于 App 库。","把桌面预设误认为包含全部业务数据。","组件只是视图，底层数据属于相册、音乐、天气等 App。"],
+    "verification":["切回原桌面时布局仍保留。","删除组件后底层 App 数据仍在。"],
+    "logGuide":{"where":"自由桌面与 App 库；渲染异常时用设置中的桌面显示排查。","keywords":["launcher","widget","桌面","layout"],"safeExcerpt":"提供桌面版本、组件类型、是否仅布局缺失和错误类型。","redact":["桌面私人图片","个人资料","聊天内容","Token"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["删除组件同时删除底层数据，或切换桌面后两套布局都丢失。"],"include":["应用版本","桌面版本","组件/App","操作步骤","脱敏截图"]},
+    "related":["settings","storage","theme"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"game-center-api-and-memory-impact","moduleId":"game-center","title":"游戏会调用 API 或写进角色记忆吗","aliases":["游戏用什么API","狼人杀调用API吗","四色牌记忆","大富翁影响聊天","省token模式"],"intents":["how-to","setup"],"symptoms":[],"errorCodes":[],
+    "summary":"发牌、掷骰、规则和结算主要在本地；狼人杀发言/决策、四色牌陪伴发言和大富翁角色台词可用主 API，大富翁策略可用副 API 2，失败时可回退本地策略。完整结算的四色牌/大富翁可写入角色活动记忆；未完成测试局通常不会形成完整经历。",
+    "steps":["先选择规则熟悉的游戏和参与角色。","想省 token 时使用页面提供的脚本/省 token 模式；它会减少或跳过角色模型调用。","完成一小局并走到正式结算，再正常退出。","回到相关角色聊天，在游戏话题中检查是否能召回胜负经历。","狼人杀历史主要服务本局推理，不要默认跨模块长期保存。"],
+    "causes":["规则本地运行，但角色台词与策略是另一条模型路径。","中途退出，没有完成结算写入。","不同游戏的跨聊天记忆策略不同。"],
+    "verification":["关闭模型台词后游戏规则仍能运行。","完整结算后，相关角色在合适话题中可召回四色牌/大富翁结果。"],
+    "logGuide":{"where":"游戏内状态与结算页；角色发言失败时看 Network。","keywords":["game","werewolf","monopoly","四色牌","strategy","settlement"],"safeExcerpt":"提供游戏、模式、参与者数量、是否结算、线路类别和错误类型。","redact":["角色提示词","聊天正文","API Key","私人游戏记录"]},
+    "escalation":{"contactProviderWhen":["角色台词线路返回鉴权、限速或服务端错误。"],"contactDeveloperWhen":["规则/结算本地错误，或完整结算写入错误角色。"],"include":["应用版本","游戏","模式","参与角色","是否结算","脱敏错误"]},
+    "related":["werewolf","memory","api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"werewolf-session-memory-boundary","moduleId":"werewolf","title":"狼人杀里的角色为什么记得本局却不记得以后","aliases":["狼人杀记忆","狼人杀角色失忆","本局推理","狼人杀主聊天"],"intents":["how-to","recovery"],"symptoms":["角色本局能推理，回主聊天后不记得"],"errorCodes":[],
+    "summary":"狼人杀角色发言和决策使用主 API，本局历史用于同一局推理；当前基础规则不要把它默认当成跨模块角色长期记忆。与四色牌和大富翁的完整结算写入不同。",
+    "steps":["在本局内确认发言历史仍可见。","完成或退出后，不要假设主聊天自动拥有整局事实。","需要保留成共同经历时，在主聊天中主动提起或按角色记忆入口记录摘要。","若本局内就忘记，记录发生轮次、角色和是否曾重载页面。"],
+    "causes":["本局上下文与角色主聊天长期记忆是不同边界。","页面重载或会话状态异常导致本局历史未恢复。"],
+    "verification":["同一局中角色能利用已有发言推理。","未手动记录时，主聊天不会被当作必然已知整局内容。"],
+    "logGuide":{"where":"狼人杀房间和本局历史；发言失败时看 Network。","keywords":["werewolf","room","round","狼人杀","history"],"safeExcerpt":"提供轮次、角色数量、是否重载和错误类型。","redact":["完整角色发言","API Key","角色设定","个人资料"]},
+    "escalation":{"contactProviderWhen":["角色发言请求返回服务商错误。"],"contactDeveloperWhen":["同一局历史存在但角色稳定收不到，或房间状态丢失。"],"include":["应用版本","房间阶段","轮次","角色数量","脱敏错误"]},
+    "related":["game-center","core-chat","memory"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"cos-export-purpose-and-boundary","moduleId":"cos-export","title":"COS 转发兜底是做什么的，要不要配置","aliases":["COS导出","腾讯云COS","下载失败","转发兜底","SecretId"],"intents":["how-to","setup","recovery"],"symptoms":["直接下载失败","不知道是否必须填 COS"],"errorCodes":[],
+    "summary":"COS 转发兜底用于直接下载不可用时的文件转发，不是日常必填项，也不是角色聊天模型；它不会自动改变主聊天。云密钥必须使用最小权限，不能把整账号管理密钥放进应用或截图。",
+    "steps":["普通导出/下载能用时保持未配置。","只有直接下载稳定失败且确认需要中转时，再准备专用存储桶与最小权限密钥。","填写后只用一个不敏感的小文件测试。","检查对象是否出现在预期路径、是否可下载，再决定是否长期启用。","不用时移除或轮换专用密钥。"],
+    "causes":["把 COS 当作聊天、生图或备份必需配置。","密钥权限过大、存储桶地址/区域不匹配或跨域设置不正确。"],
+    "verification":["不配置时普通功能仍正常。","启用后测试文件能经预期存储桶完成转发。"],
+    "logGuide":{"where":"导出失败页面和 Network。","keywords":["COS","export","upload","download","CORS"],"safeExcerpt":"提供区域、是否私有桶、状态码和错误类型；不要提供完整域名或凭据。","redact":["SecretId","SecretKey","临时签名","私有桶完整地址","文件内容"]},
+    "escalation":{"contactProviderWhen":["云存储返回权限、签名、区域或服务端错误。"],"contactDeveloperWhen":["直连下载正常但开启兜底后应用稳定选择错误路径。"],"include":["应用版本","导出类型","区域","状态码","脱敏错误"]},
+    "related":["storage","settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  }
+]

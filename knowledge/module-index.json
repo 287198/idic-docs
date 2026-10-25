@@ -13,6 +13,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "core-chat-api-and-history-impact",
         "core-chat-basics",
         "core-chat-errors"
       ]
@@ -27,7 +28,10 @@
       ],
       "status": "documented",
       "entryIds": [
-        "settings-overview"
+        "settings-overview",
+        "settings-api-routing-map",
+        "settings-what-apps-affect-main-chat",
+        "settings-safe-configuration-order"
       ]
     },
     {
@@ -49,7 +53,8 @@
         "http-401-403",
         "http-404-408",
         "http-429",
-        "http-5xx"
+        "http-5xx",
+        "http-504"
       ]
     },
     {
@@ -64,7 +69,8 @@
       "status": "documented",
       "entryIds": [
         "memory-basics",
-        "memory-errors"
+        "memory-errors",
+        "memory-character-keeps-forgetting"
       ]
     },
     {
@@ -78,7 +84,8 @@
       "status": "documented",
       "entryIds": [
         "hippocampus-basics",
-        "hippocampus-errors"
+        "hippocampus-errors",
+        "hippocampus-deployment"
       ]
     },
     {
@@ -92,6 +99,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "group-chat-api-and-private-chat-impact",
         "group-chat-basics",
         "group-chat-errors"
       ]
@@ -107,6 +115,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "character-relationship-graph-impact",
         "character-basics"
       ]
     },
@@ -121,6 +130,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "moments-api-and-chat-impact",
         "moments-basics"
       ]
     },
@@ -134,6 +144,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "pet-api-and-chat-impact",
         "pet-basics",
         "pet-errors"
       ]
@@ -148,6 +159,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "diary-api-and-chat-impact",
         "diary-basics"
       ]
     },
@@ -178,6 +190,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "music-api-and-chat-impact",
         "music-basics",
         "music-errors"
       ]
@@ -193,6 +206,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "movie-api-and-chat-impact",
         "movie-basics"
       ]
     },
@@ -207,6 +221,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "takeout-api-and-chat-impact",
         "takeout-basics"
       ]
     },
@@ -222,6 +237,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "phone-check-api-and-chat-impact",
         "phone-check-basics"
       ]
     },
@@ -251,7 +267,8 @@
       ],
       "status": "documented",
       "entryIds": [
-        "theme-basics"
+        "theme-basics",
+        "theme-chat-bubble-does-not-match"
       ]
     },
     {
@@ -265,6 +282,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "image-generation-camera-gallery-impact",
         "image-generation-basics",
         "image-generation-errors"
       ]
@@ -281,7 +299,8 @@
       "status": "documented",
       "entryIds": [
         "voice-tools-basics",
-        "voice-tools-errors"
+        "voice-tools-errors",
+        "voice-tools-interjections-missing"
       ]
     },
     {
@@ -294,6 +313,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "weather-api-and-chat-impact",
         "weather-basics"
       ]
     },
@@ -308,6 +328,7 @@
       ],
       "status": "documented",
       "entryIds": [
+        "offline-worldbook-preset-chat-impact",
         "offline-worldbook-basics"
       ]
     },
@@ -320,7 +341,9 @@
         "剧情卡"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "visual-novel-api-and-chat-impact"
+      ]
     },
     {
       "moduleId": "werewolf",
@@ -331,7 +354,9 @@
         "游戏"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "werewolf-session-memory-boundary"
+      ]
     },
     {
       "moduleId": "gps",
@@ -343,7 +368,9 @@
         "位置"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "gps-api-and-chat-impact"
+      ]
     },
     {
       "moduleId": "wallet-ledger",
@@ -355,7 +382,9 @@
         "账本"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "wallet-ledger-api-and-chat-impact"
+      ]
     },
     {
       "moduleId": "favorites",
@@ -366,7 +395,9 @@
         "角色收藏"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "favorites-api-and-chat-impact"
+      ]
     },
     {
       "moduleId": "notifications",
@@ -378,7 +409,9 @@
         "提醒"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "notifications-offline-messages-impact"
+      ]
     },
     {
       "moduleId": "pomodoro",
@@ -388,7 +421,9 @@
         "计时器"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "pomodoro-api-and-chat-impact"
+      ]
     },
     {
       "moduleId": "accounting",
@@ -398,7 +433,9 @@
         "账单"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "accounting-api-and-chat-impact"
+      ]
     },
     {
       "moduleId": "shopping",
@@ -408,7 +445,9 @@
         "商品"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "shopping-api-and-chat-impact"
+      ]
     },
     {
       "moduleId": "sticker",
@@ -419,7 +458,9 @@
         "AI表情"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "sticker-api-and-chat-impact"
+      ]
     },
     {
       "moduleId": "cos-export",
@@ -430,7 +471,9 @@
         "对象存储"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "cos-export-purpose-and-boundary"
+      ]
     },
     {
       "moduleId": "phone-launcher",
@@ -441,7 +484,9 @@
         "经典QQ聊天器"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "phone-launcher-widgets-impact"
+      ]
     },
     {
       "moduleId": "game-center",
@@ -451,7 +496,9 @@
         "游戏"
       ],
       "status": "partial",
-      "entryIds": []
+      "entryIds": [
+        "game-center-api-and-memory-impact"
+      ]
     },
     {
       "moduleId": "xhs-share",
@@ -464,5 +511,5 @@
       "entryIds": []
     }
   ],
-  "entryCount": 37
+  "entryCount": 71
 }

@@ -6,5 +6,35 @@
     "causes":[],"verification":["返回设置首页时，对应分区摘要显示新的状态。"],
     "logGuide":{"where":"设置页面出错时按 F12 打开 Console。","keywords":["设置页渲染失败","[IDIC] 设置页","save settings"],"safeExcerpt":"只截取打开设置或保存动作前后约 20 行。","redact":["api key","token","cookie","个人资料"]},
     "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["保存设置后刷新页面仍丢失，或打开设置页稳定崩溃。"],"include":["版本、设置分区、操作顺序、页面提示、脱敏日志"]},"related":["api-settings","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+  },
+  {
+    "id":"settings-api-routing-map","moduleId":"settings","title":"每个功能到底调用哪套 API","aliases":["这个软件调用什么API","主API副API区别","哪些功能会扣token","App API 对照","为什么聊天能用但生图语音不能用"],"intents":["how-to","setup","recovery"],"symptoms":["主聊天正常但某个 App 不能用","不知道该检查主 API 还是独立服务"],"errorCodes":[],
+    "summary":"先按功能分线路：角色主 API 负责角色台词和私聊；主 API 是全局默认；副 API 1 偏复杂分析；副 API 2 偏轻量分类、NPC、环境或批量任务；生图、STT、TTS、音乐、天气和实时视频各有独立服务。主聊天能用，不代表这些独立线路已经配置。",
+    "steps":["先说清出错入口：私聊、群聊、动态、日记、记忆、生图、语音、音乐、电影、购物或查手机。","私聊与保持人设的角色台词：先查角色自己的主 API 覆盖；没有覆盖才查全局主 API。","复杂整理/分析（部分记忆、关系、查手机、购物等）：查副 API 1；该模块未声明回退时，缺失就会停止。","轻量 NPC、环境、批量素材或部分游戏策略：查副 API 2；是否回退主 API 由模块决定。","出图查“设置 → 生图”；听你说话查 STT；角色发声查该角色 TTS；音乐曲库查网易云接口；原创音乐查音乐生成服务；实时视频另查视频服务。","只浏览本地列表、历史、收藏、账本或缓存通常不调用模型；点生成、分析、刷新、同步、制作等动作才可能联网。"],
+    "causes":["把全局主 API 当成所有功能共用的万能线路。","角色设置覆盖了全局 API，实际请求走了另一套配置。","副 API 未配置，而当前模块不支持回退主 API。","独立业务服务的地址、Key、模型或权限未配置。"],
+    "verification":["能指出当前动作实际使用的线路，而不是笼统说“API 有问题”。","只测试该线路的一次最小动作后恢复。","Token 用量或服务商日志中的模型与预期线路一致。"],
+    "logGuide":{"where":"F12 → Network；先按功能名筛选失败请求，再看状态码。","keywords":["chat/completions","models","image","TTS","STT","music","weather","API请求失败"],"safeExcerpt":"提供功能入口、线路类别、服务商、模型、状态码和第一句错误。","redact":["API Key","Authorization","Cookie","完整请求体","聊天正文","私人媒体"]},
+    "escalation":{"contactProviderWhen":["已定位到独立服务且返回 401/403/429/5xx。"],"contactDeveloperWhen":["知识库标注的线路与实际稳定调用不一致，或一次动作重复调用。"],"include":["应用版本","功能入口","预期线路","实际服务商/模型","状态码","脱敏错误"]},
+    "related":["api-settings","image-generation","voice-tools","music","calls"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"settings-what-apps-affect-main-chat","moduleId":"settings","title":"App 里的内容会不会影响角色主聊天","aliases":["软件内容会影响聊天吗","角色为什么知道我在App里做的事","App数据进记忆吗","主聊天影响","角色怎么知道账本天气宠物"],"intents":["how-to","recovery"],"symptoms":["角色提到其他 App 的内容","以为角色应该知道但角色不知道","担心 App 隐私自动进入聊天"],"errorCodes":[],
+    "summary":"判断影响不要只看“是否用了 AI”，要看结果走哪条回流路径：写进聊天历史、写进角色记忆、按条件注入提示词、改变角色配置，或完全不自动影响。进入背景也不代表角色下一句一定主动提起。",
+    "steps":["先问用户做了哪个动作，而不只问打开了哪个 App；浏览和生成/分享/确认的影响可能不同。","直接写聊天历史：私聊、保存后的通话文本、定位/分享卡片、专注完成记录、部分查手机或角色参与操作。","写角色记忆：部分动态互动、角色外卖订单、完整游戏结算等；以后只在相关召回时可能出现。","注入提示词：近期账本、天气、关系、宠物、日记、GPS、一起听歌等会按角色、话题或当前状态提供背景。","改变配置：角色卡、身份、世界书和预设不会新建聊天消息，但会改变后续回复。","不自动影响：单纯收藏、普通相册导入、外观、美化、小说正文、枕边作品、纯本地浏览通常不会自动成为角色经历，除非分享、写入设定或模块明确记录。"],
+    "causes":["用户把“模块调用模型”误解为“结果一定进入主聊天”。","内容有可见范围、角色归属或触发词，当前会话未满足。","后台写入/同步尚未完成或失败。","内容只存在 App 自己的数据库，没有回流设计。"],
+    "verification":["能明确说出这次动作属于五条路径中的哪一条。","切换到正确角色和相关话题后，应该注入的背景可以被使用。","标为不自动影响的内容不会因单纯浏览就被角色复述。"],
+    "logGuide":{"where":"先看 App 页面中的角色、可见范围、分享/保存/确认状态；写入失败时再看 Console。","keywords":["memory","context","system event","角色","可见范围","同步"],"safeExcerpt":"提供模块、动作、目标角色、是否保存/分享/确认和错误类型。","redact":["聊天正文","日记正文","账本真实信息","真实位置","API Key","个人资料"]},
+    "escalation":{"contactProviderWhen":[],"contactDeveloperWhen":["知识库明确标注应回流的已保存动作，在正确角色下稳定没有写入或注入。","标注不自动影响的本地内容在未分享时泄漏到其他角色。"],"include":["应用版本","模块和动作","目标角色","可见范围","是否保存/分享/确认","预期路径","脱敏现象"]},
+    "related":["core-chat","memory","character","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"settings-safe-configuration-order","moduleId":"settings","title":"设置很多，应该按什么顺序配置","aliases":["设置怎么配","新手默认配置","先配哪个API","设置太多了","完整配置顺序"],"intents":["setup","how-to"],"symptoms":[],"errorCodes":[],
+    "summary":"最稳妥的顺序是先让主聊天跑通，再按实际需要逐项接入独立能力；每次只改一类设置并做最小测试。",
+    "steps":["先备份当前数据和外观预设。","只配置主 API，用一条短消息验证角色能回复。","检查角色资料和当前会话“我的身份”，完成一轮聊天。","再按需求配置本地记忆/总结；海马体和向量召回不是基础聊天必需。","需要图片再接生图；需要听写再接 STT；需要角色发声再接 TTS；三者分别测试。","最后再接音乐、实时视频、COS、插件、GitHub 同步等独立能力。","外观按颜色 → 背景 → 字体 → 图标 → 自定义 CSS 的顺序修改，每一步保存并检查可读性。"],
+    "causes":[],
+    "verification":["每条线路都有一项独立的最小成功测试。","某功能失败时，能回到上一个已知可用状态。","备份文件在系统文件管理器中存在且大小合理。"],
+    "logGuide":{"where":"出错模块对应的 Console/Network；不要一次同时改多套设置。","keywords":["save","test","API","settings","backup"],"safeExcerpt":"提供刚改的唯一设置类别和最小测试结果。","redact":["API Key","Token","Cookie","备份正文","个人资料"]},
+    "escalation":{"contactProviderWhen":["独立服务最小测试返回鉴权、限速或服务器错误。"],"contactDeveloperWhen":["单项保存后刷新稳定丢失，或默认配置也无法恢复。"],"include":["应用版本","刚改的设置","修改前后结果","最小测试","脱敏错误"]},
+    "related":["api-settings","storage","theme","voice-tools","image-generation"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
   }
 ]
