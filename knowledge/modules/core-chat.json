@@ -14,6 +14,6 @@
     "causes":["API 地址、密钥或模型未配置。","服务商限速。","网络、代理或 CORS 阻止请求。","模型服务返回了无法解析的结果。"],
     "verification":["短消息能够收到回复，并且 Console 不再出现同类错误。"],
     "logGuide":{"where":"F12 → Console；需要请求详情时打开 Network 后重试一次。","keywords":["[IDIC][ChatCore]","API请求失败","HTTP错误","AI-DIAG"],"safeExcerpt":"只提供重试动作前后约 20 行或单个失败请求的状态码。","redact":["Authorization","Bearer 后的密钥","Cookie","完整请求体","角色提示词","聊天原文"]},
-    "escalation":{"contactProviderWhen":["401/403：密钥或权限问题。","429：连续限速。","5xx：服务商返回服务器错误。"],"contactDeveloperWhen":["配置正确、服务商状态正常，但只有 IDIC.Chat 稳定复现。"],"include":["IDIC.Chat 版本、浏览器、模块、时间、状态码、脱敏错误、已尝试步骤"]},"related":["api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+    "escalation":{"contactProviderWhen":["401/403：密钥或权限问题。","429：连续限速。","5xx：服务商返回服务器错误。"],"contactDeveloperWhen":["配置正确、服务商状态正常，但只有 眠眠机（Mmianji） 稳定复现。"],"include":["眠眠机（Mmianji） 版本、浏览器、模块、时间、状态码、脱敏错误、已尝试步骤"]},"related":["api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
   }
 ]

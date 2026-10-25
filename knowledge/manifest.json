@@ -1,12 +1,12 @@
 {
-  "knowledgeVersion": "0.1.0",
+  "knowledgeVersion": "0.2.0",
   "appVersion": "2.5.77",
   "generatedAt": "2026-10-25",
   "supportedLocales": [
     "zh-CN"
   ],
-  "entryCount": 71,
-  "moduleCount": 35,
+  "entryCount": 105,
+  "moduleCount": 36,
   "schemaVersion": "1.0.0",
   "runtimeBoundary": {
     "allowedRoots": [

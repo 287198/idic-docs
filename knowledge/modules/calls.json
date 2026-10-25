@@ -10,10 +10,10 @@
   {
     "id":"calls-errors","moduleId":"calls","title":"通话没有声音或无法启动","aliases":["通话没声音","麦克风打不开","视频黑屏"],"intents":["error","recovery","logging"],"symptoms":["无法获得麦克风权限","通话页面没有声音","视频画面为空"],"errorCodes":["403","408"],
     "summary":"先检查浏览器或系统权限，再确认页面没有被其他应用占用。",
-    "steps":["检查浏览器地址栏的麦克风和摄像头权限。","允许 IDIC.Chat 使用需要的设备。","关闭其他占用麦克风或摄像头的应用。","退出通话并重新进入。","仍失败时记录浏览器 Console 的第一条错误。"],
+    "steps":["检查浏览器地址栏的麦克风和摄像头权限。","允许 眠眠机（Mmianji） 使用需要的设备。","关闭其他占用麦克风或摄像头的应用。","退出通话并重新进入。","仍失败时记录浏览器 Console 的第一条错误。"],
     "causes":["浏览器或系统权限被拒绝。","设备被其他应用占用。","网络或通话服务请求超时。"],
     "verification":["重新进入通话后能看到权限已允许，并出现音频或视频状态。"],
     "logGuide":{"where":"F12 → Console；Network 只查看失败请求状态。","keywords":["permission","NotAllowedError","NotReadableError","voice-call","video-call"],"safeExcerpt":"只提供错误名和浏览器版本。","redact":["音视频内容","Cookie","Token","个人信息"]},
-    "escalation":{"contactProviderWhen":["通话服务接口返回 5xx 或鉴权错误。"],"contactDeveloperWhen":["权限正常、设备可用但 IDIC.Chat 稳定无法启动。"],"include":["版本、浏览器、系统、权限、错误名、复现步骤"]},"related":["voice-tools"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
+    "escalation":{"contactProviderWhen":["通话服务接口返回 5xx 或鉴权错误。"],"contactDeveloperWhen":["权限正常、设备可用但 眠眠机（Mmianji） 稳定无法启动。"],"include":["版本、浏览器、系统、权限、错误名、复现步骤"]},"related":["voice-tools"],"appVersion":"2.5.77","lastVerifiedAt":"2026-08-14"
   }
 ]

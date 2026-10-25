@@ -1,0 +1,102 @@
+[
+  {
+    "id":"http-402","moduleId":"api-settings","title":"HTTP 402：付款、余额或额度不足","aliases":["402","Payment Required","余额不足","额度不足","欠费"],"intents":["error","recovery","escalation"],"symptoms":["服务商拒绝请求并提示付款或余额"],"errorCodes":["402"],
+    "summary":"402 通常表示服务商账户余额、套餐或项目额度不足，不是眠眠机本地钱包“夸特”不足。",
+    "steps":["停止重复请求。","到对应服务商控制台检查余额、套餐、项目预算和账单状态。","确认当前 Key 属于正确项目。","恢复额度后用短请求测试。"],
+    "causes":["外部 API 账户欠费或额度耗尽。","Key 属于无额度项目。"],
+    "verification":["服务商控制台额度有效，短请求不再返回 402。"],
+    "logGuide":{"where":"服务商控制台和 Network 响应。","keywords":["402","payment","billing","credit"],"safeExcerpt":"提供服务商、功能、状态码和错误摘要。","redact":["API Key","账单明细","支付信息","账户 ID"]},
+    "escalation":{"contactProviderWhen":["恢复余额后仍返回 402。"],"contactDeveloperWhen":["响应不是 402 但页面错误映射为欠费。"],"include":["版本","服务商","功能","模型","状态码","额度状态"]},
+    "related":["api-settings","troubleshooting"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"http-405","moduleId":"api-settings","title":"HTTP 405：接口不允许当前请求方法","aliases":["405","Method Not Allowed","请求方法错误","POST不允许","GET不允许"],"intents":["error","recovery","logging"],"symptoms":["接口存在但拒绝 GET/POST/OPTIONS"],"errorCodes":["405"],
+    "summary":"405 表示地址可能存在，但当前 GET、POST 或 OPTIONS 方法不被允许；常见于 Base URL/接口路径填错或跨域预检未配置。",
+    "steps":["确认失败请求的方法。","核对服务商文档要求的 Base URL 和聊天/模型/图片接口路径。","若失败的是 OPTIONS，按 CORS 预检排查。","不要在地址栏直接打开 POST 接口来判断其可用性。"],
+    "causes":["接口路径填错。","服务商不支持模型列表 GET。","代理未处理 OPTIONS。"],
+    "verification":["请求方法与文档一致并返回正常状态。"],
+    "logGuide":{"where":"Network → Method、Request URL、Response。","keywords":["405","Method Not Allowed","OPTIONS"],"safeExcerpt":"提供方法、路径类型、状态码和 Allow 响应头。","redact":["完整私有 URL","Authorization","请求体"]},
+    "escalation":{"contactProviderWhen":["按文档方法调用仍被拒绝。"],"contactDeveloperWhen":["眠眠机对兼容接口使用错误方法。"],"include":["版本","功能","方法","路径类型","状态码"]},
+    "related":["api-settings","troubleshooting"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"http-409","moduleId":"api-settings","title":"HTTP 409：状态冲突或重复操作","aliases":["409","Conflict","重复任务","状态冲突","资源已存在"],"intents":["error","recovery","logging"],"symptoms":["重复创建或当前状态不允许操作"],"errorCodes":["409"],
+    "summary":"409 表示请求与服务器当前状态冲突，例如重复创建、任务仍处理中、版本冲突或资源已经存在。",
+    "steps":["停止再次提交。","刷新原任务/资源状态。","检查是否已经创建成功或仍在处理中。","按页面提供的继续、恢复、更新或删除旧草稿流程处理，不要盲目换 Key。"],
+    "causes":["重复请求。","异步任务未结束。","编辑的资源版本已变化。"],
+    "verification":["原资源进入明确终态，后续单次操作成功。"],
+    "logGuide":{"where":"任务/资源页面和 Network。","keywords":["409","Conflict","duplicate","already exists"],"safeExcerpt":"提供资源类型、当前状态、操作次数和错误摘要。","redact":["完整资源 ID","内容正文","API Key"]},
+    "escalation":{"contactProviderWhen":["服务商资源状态无法解除冲突。"],"contactDeveloperWhen":["单次操作被眠眠机重复提交导致 409。"],"include":["版本","功能","资源状态","操作次数","脱敏错误"]},
+    "related":["troubleshooting"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"http-413-414","moduleId":"api-settings","title":"HTTP 413/414：请求体、文件或网址太大","aliases":["413","414","Payload Too Large","URI Too Long","文件太大","请求太大"],"intents":["error","recovery"],"symptoms":["长聊天、图片、附件或长网址才失败"],"errorCodes":["413","414"],
+    "summary":"413 是请求体/文件过大，414 是网址过长；常见限制可能来自浏览器、中转、CDN或服务商，并不只看模型上下文上限。",
+    "steps":["用短文本或小文件测试。","减少上下文条数、图片数量和附件大小。","不要把大段数据放进 URL 查询参数。","核对代理/CDN与服务商的请求体限制。"],
+    "causes":["长上下文或 Base64 图片。","上传文件超过限制。","代理限制小于模型限制。","把正文错误编码进 URL。"],
+    "verification":["缩小请求后成功，并找到限制层。"],
+    "logGuide":{"where":"Network → Request Size、Status。","keywords":["413","414","Payload Too Large","URI Too Long"],"safeExcerpt":"提供功能、文件数量/大小、上下文条数和状态码。","redact":["请求正文","附件内容","完整 URL","API Key"]},
+    "escalation":{"contactProviderWhen":["文档允许的大小仍被拒绝。"],"contactDeveloperWhen":["应用异常重复编码或放大请求。"],"include":["版本","功能","大小/数量","限制层","脱敏错误"]},
+    "related":["troubleshooting","storage"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"http-415","moduleId":"api-settings","title":"HTTP 415：文件或请求媒体类型不支持","aliases":["415","Unsupported Media Type","格式不支持","Content-Type错误","音频格式错误"],"intents":["error","recovery"],"symptoms":["上传音频、图片或文件时被拒绝"],"errorCodes":["415"],
+    "summary":"415 表示服务端不接受当前 Content-Type、文件格式或编码；常见于 STT 音频、图片编辑和文件上传。",
+    "steps":["确认功能支持的格式和扩展名。","用常见的小文件测试，例如标准 PNG/JPEG 或常见音频格式。","不要只改扩展名伪装格式。","检查自定义兼容接口要求的 multipart/json 协议。"],
+    "causes":["文件实际编码与扩展名不符。","请求 Content-Type 错误。","服务商不支持该格式。"],
+    "verification":["受支持的标准小文件上传成功。"],
+    "logGuide":{"where":"Network → Request Headers 和文件信息。","keywords":["415","Unsupported Media Type","Content-Type","mime"],"safeExcerpt":"提供功能、MIME、扩展名、大小和状态码。","redact":["文件内容","Authorization","API Key"]},
+    "escalation":{"contactProviderWhen":["服务商文档支持该 MIME 仍拒绝。"],"contactDeveloperWhen":["眠眠机发送了错误 Content-Type。"],"include":["版本","功能","格式/MIME/大小","状态码","脱敏错误"]},
+    "related":["voice-tools","image-generation","troubleshooting"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"http-422","moduleId":"api-settings","title":"HTTP 422：字段能解析，但内容校验不通过","aliases":["422","Unprocessable Entity","字段校验失败","参数范围错误","validation error"],"intents":["error","recovery","logging"],"symptoms":["服务器能读取请求但指出某字段无效"],"errorCodes":["422"],
+    "summary":"422 表示格式大体可解析，但模型名、尺寸、语种、音色、采样参数或必填字段没有通过业务校验。",
+    "steps":["读取响应中指出的具体字段。","把该字段恢复为服务商默认或文档允许值。","用最小参数测试，再逐项恢复高级参数。","生图、TTS、STT等独立服务要查各自参数范围。"],
+    "causes":["缺少必填字段。","尺寸、数值或枚举超出范围。","模型与音色/语种/参数不兼容。"],
+    "verification":["最小默认参数请求成功，逐项恢复后找到无效字段。"],
+    "logGuide":{"where":"Network → Response。","keywords":["422","validation","field","unprocessable"],"safeExcerpt":"提供功能、字段名、状态码和允许范围摘要。","redact":["字段中的正文","API Key","完整请求体"]},
+    "escalation":{"contactProviderWhen":["合法默认值仍被拒绝。"],"contactDeveloperWhen":["页面保存了不应允许的值或发送错误字段。"],"include":["版本","功能","字段名/值类别","模型","脱敏错误"]},
+    "related":["api-settings","image-generation","voice-tools"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"http-499","moduleId":"api-settings","title":"HTTP 499：客户端在服务端完成前断开","aliases":["499","Client Closed Request","客户端断开","请求被取消"],"intents":["error","recovery","logging"],"symptoms":["代理日志显示客户端提前关闭"],"errorCodes":["499"],
+    "summary":"499 常表示浏览器、应用或前置代理在上游完成前关闭了连接；可能来自本地超时、页面切换、网络断开或主动取消。",
+    "steps":["记录断开时间和是否切换/关闭页面。","保持页面前台，用短请求测试。","检查眠眠机回复超时和代理客户端超时。","若用户主动取消或 AbortError，不要当作服务商故障。"],
+    "causes":["本地超时。","页面关闭或切后台。","网络中断。","用户主动取消。"],
+    "verification":["短请求保持连接并正常完成。"],
+    "logGuide":{"where":"代理日志、Network Timing 和 Console。","keywords":["499","Client Closed Request","AbortError","closed"],"safeExcerpt":"提供等待秒数、页面状态和错误名。","redact":["请求正文","API Key","完整代理地址"]},
+    "escalation":{"contactProviderWhen":["代理自身异常关闭连接。"],"contactDeveloperWhen":["应用在设置期限前无故取消请求。"],"include":["版本","功能","等待秒数","页面状态","超时设置"]},
+    "related":["troubleshooting","api-settings"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"http-501-505","moduleId":"api-settings","title":"HTTP 501/505：接口能力或协议不受支持","aliases":["501","505","Not Implemented","HTTP Version Not Supported","功能不支持"],"intents":["error","recovery","escalation"],"symptoms":["服务明确不实现接口或协议"],"errorCodes":["501","505"],
+    "summary":"这类错误多为服务商、中转或接口兼容能力不足；换同一地址下的 Key 通常无效。",
+    "steps":["确认调用的是服务商支持的接口类型。","检查中转是否支持流式、多模态、图片编辑或当前 HTTP 协议。","用服务商官方兼容地址做最小测试。","需要时关闭该高级能力或更换兼容线路。"],
+    "causes":["中转未实现接口。","协议或高级能力不支持。","接口版本不匹配。"],
+    "verification":["受支持的基础接口能完成请求。"],
+    "logGuide":{"where":"Network 响应和服务商文档。","keywords":["501","505","Not Implemented","Not Supported"],"safeExcerpt":"提供功能、接口类型、协议、状态码和错误摘要。","redact":["API Key","完整私有 URL","请求体"]},
+    "escalation":{"contactProviderWhen":["服务商文档宣称支持但返回 501/505。"],"contactDeveloperWhen":["眠眠机选择了错误协议或不支持的接口。"],"include":["版本","功能","接口类型","服务商/中转","脱敏错误"]},
+    "related":["api-settings","troubleshooting"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"http-507","moduleId":"api-settings","title":"HTTP 507：服务端存储空间不足","aliases":["507","Insufficient Storage","服务器空间不足","云端存储满"],"intents":["error","recovery","escalation"],"symptoms":["上传、生成或保存到云端时返回 507"],"errorCodes":["507"],
+    "summary":"507 表示服务器或云存储空间不足，不等于本机浏览器存储已满。",
+    "steps":["停止重复上传。","确认返回 507 的服务商或自建中转。","检查其磁盘、存储桶配额或账户容量。","释放或扩容后用小文件测试。"],
+    "causes":["自建服务磁盘已满。","云存储配额耗尽。","临时文件未清理。"],
+    "verification":["服务端有空间，小文件上传成功。"],
+    "logGuide":{"where":"服务端/云存储控制台和 Network。","keywords":["507","Insufficient Storage","disk","quota"],"safeExcerpt":"提供服务类型、状态码、容量状态和文件大小。","redact":["存储凭据","桶完整地址","文件内容"]},
+    "escalation":{"contactProviderWhen":["第三方服务返回 507。"],"contactDeveloperWhen":["自建眠眠机服务存储未释放或错误映射状态。"],"include":["版本","服务类型","文件大小","容量状态","脱敏错误"]},
+    "related":["storage","cos-export","troubleshooting"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  },
+  {
+    "id":"http-520-526","moduleId":"api-settings","title":"HTTP 520/521/522/523/524/525/526：CDN 与源站连接异常","aliases":["520","521","522","523","524","525","526","Cloudflare错误","源站超时","SSL错误"],"intents":["error","recovery","escalation"],"symptoms":["CDN 页面返回源站或 SSL 错误"],"errorCodes":["520","521","522","523","524","525","526"],
+    "summary":"这些状态通常来自 CDN 到源站：520 未知源站错误，521 源站拒绝，522 连接超时，523 源站不可达，524 已连接但响应超时，525/526 为 TLS/证书问题。它们通常不是 API Key 错误。",
+    "steps":["记录准确状态码、域名类型和发生时间。","查看服务商/中转状态页。","短请求等待几分钟后只重试一次。","自建中转检查源站进程、DNS、防火墙、超时和证书。","不要通过反复更换 Key 处理 CDN 源站错误。"],
+    "causes":["源站宕机或拒绝连接。","CDN 到源站网络超时。","DNS 指向错误。","TLS 证书无效。","源站处理过慢。"],
+    "verification":["源站健康，CDN 请求返回正常 HTTP 状态。"],
+    "logGuide":{"where":"Network 响应头、CDN/源站状态页。","keywords":["520","521","522","523","524","525","526","ray id","origin"],"safeExcerpt":"提供状态码、时间、域名类型、是否自建和通用错误页标题。","redact":["完整私有域名","Ray ID 全文","API Key","请求体"]},
+    "escalation":{"contactProviderWhen":["第三方服务或中转持续返回 CDN 源站错误。"],"contactDeveloperWhen":["眠眠机官方站点代理持续返回这些状态。"],"include":["版本","功能","状态码","发生时间","服务商/自建","脱敏响应头"]},
+    "related":["api-settings","troubleshooting"],"appVersion":"2.5.77","lastVerifiedAt":"2026-10-25"
+  }
+]

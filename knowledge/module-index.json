@@ -49,6 +49,16 @@
       "entryIds": [
         "api-settings-basics",
         "api-settings-errors",
+        "http-402",
+        "http-405",
+        "http-409",
+        "http-413-414",
+        "http-415",
+        "http-422",
+        "http-499",
+        "http-501-505",
+        "http-507",
+        "http-520-526",
         "http-400",
         "http-401-403",
         "http-404-408",
@@ -509,7 +519,46 @@
       ],
       "status": "partial",
       "entryIds": []
+    },
+    {
+      "moduleId": "troubleshooting",
+      "displayName": "通用报错与异常分诊",
+      "aliases": [
+        "报错",
+        "异常",
+        "故障排查",
+        "不能用",
+        "失败",
+        "没反应"
+      ],
+      "status": "documented",
+      "entryIds": [
+        "troubleshooting-start-here",
+        "troubleshooting-feature-uses-independent-api",
+        "troubleshooting-failed-to-fetch",
+        "troubleshooting-cors-blocked",
+        "troubleshooting-client-timeout",
+        "troubleshooting-invalid-response",
+        "troubleshooting-stream-interrupted",
+        "troubleshooting-empty-or-refused-output",
+        "troubleshooting-context-too-long",
+        "troubleshooting-model-not-found",
+        "troubleshooting-quota-billing",
+        "troubleshooting-duplicate-submit",
+        "troubleshooting-job-stuck",
+        "troubleshooting-permission-denied",
+        "troubleshooting-media-load-play",
+        "troubleshooting-save-reload-loss",
+        "troubleshooting-storage-quota",
+        "troubleshooting-import-rejected",
+        "troubleshooting-backup-restore-incomplete",
+        "troubleshooting-ui-blank-or-click",
+        "troubleshooting-stale-cache-version",
+        "troubleshooting-wrong-role-or-visibility",
+        "troubleshooting-plugin-conflict",
+        "troubleshooting-export-download"
+      ]
     }
   ],
-  "entryCount": 71
+  "entryCount": 105
 }
